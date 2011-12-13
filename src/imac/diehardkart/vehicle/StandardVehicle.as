@@ -120,7 +120,7 @@ package imac.diehardkart.vehicle {
 		
 		// Loose life
 		public function looseLife(damages:int) : void {
-			_life = damages * _coeffLifeLost;
+			_life = _life - damages * _coeffLifeLost;
 		}
 	}
 }
