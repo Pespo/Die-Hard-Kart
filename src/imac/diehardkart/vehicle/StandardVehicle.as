@@ -16,6 +16,8 @@ package imac.diehardkart.vehicle {
 		private var ctr_framesSinceLastMove:uint = 0;
 		private var _framesTilMove:uint;
 		
+		// @todo : Make sure types are correct.
+		
 		// current life of vehicle
 		private var _life : Number;
 		// for making vehicle more or less destroyable
@@ -111,9 +113,14 @@ package imac.diehardkart.vehicle {
 		}
 		
 		// Explosion
-		public function explode() {
+		public function explode() : void {
 			this.gotoAndPlay(Vehicle.EXPLOSION_FRAME);
 			this.dispatchEvent(new Event(Vehicle.EXPLOSION));
+		}
+		
+		// Loose life
+		public function looseLife(damages:int) : void {
+			_life = _life - damages * _coeffLifeLost;
 		}
 	}
 }
