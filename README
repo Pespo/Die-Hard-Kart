@@ -1,0 +1,113 @@
+CODE CONVENTIONS
+
+Camel case
+- Class name must start with an uppercase letter
+- var name must star with a lowercase letter
+
+Naming
+- var that are class property must start with "m_"
+- function that responds to an event must star with "e_"
+
+Tab size
+- Tab must be sized with 4 spaces (can be changed in editor)
+
+Blank spaces
+- before and after ":" for var type and function return (not function's parameters)
+- after instruction name (if, while, …)
+- before "{"
+- after ","
+- before and after operator
+- after ";" in instructions
+
+COMMENT CONVENTIONS
+http://livedocs.adobe.com/flex/3/html/help.html?content=asdoc_1.html
+ 
+Inline tags
+- @author (author of the class/method)
+- @param 
+- @return
+- @inheritDoc (for inherit the doc from the parent)
+- …
+
+Inline html
+- <p>some text on many lines</p>
+- <code>some formated code</code>
+- ...
+
+Class description 
+/** 
+ * Description
+ * <p>Other informations</p>
+ * @author
+ */
+
+Method description
+/** 
+ * Description
+ * <p>Other informations</p>
+ * @param [name] [description]
+ * @return [type] [description]
+ */
+
+Public/protected property description
+/** 
+ * Description
+ * <p>Other informations</p>
+ */
+
+Others description
+- align groups of comments (with tabs)
+- line comment: // Inline comment
+- paragraph comment: /* My comments 
+						on many lines */
+	
+GLOBAL EXAMPLE
+package mypackage.name {
+	
+	/**
+	 * A class that have no sense
+	 * <p>Used for code conventions example
+	 * @author muxisar
+	 */
+	public class MyClass extends MyParent {
+	
+		private var m_cptr : uint;			// Generic counter
+		private var m_display : MySprite;	// For displaying the images
+
+		/** 
+		 * For counting the children
+		 */
+		public var nbChildren : uint;
+		 
+		public function MyClass() {
+			addEventListener(Event.ENTER_FRAME
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function stock() : void {
+			super.stock();
+			m_display.indexing(1);
+		}
+		
+		/** 
+		 * Initialize the display
+		 * <p>This function is bullshit</p>
+		 * @param range A <code>mypackage.name.StrangeT</code> instance
+		 * @return uint The index of the first element of <code>mypackage.name.MySprite</code> created
+		 */
+		public function setDisplay(range:StrangeT, tx:uint) : uint {	 
+			range.setTx(tx);
+			
+			// A stupid counter
+			for (m_cptr = 0; m_cptr < range.size; ++m_cptr) {
+				tx += (m_cptr % 2) / 3;
+			}
+			
+			m_display = new MySprite(tx);
+			
+			return m_display.indexing(0);
+		}
+	}
+}
