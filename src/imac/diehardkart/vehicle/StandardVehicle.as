@@ -1,4 +1,5 @@
 package imac.diehardkart.vehicle {
+	import imac.diehardkart.utils.CustomEvent;
 	import flash.display.Sprite;
 	import imac.diehardkart.game.Game;
 	import imac.diehardkart.utils.FrameLabel;
@@ -9,7 +10,7 @@ package imac.diehardkart.vehicle {
 	 * The common vehicle in the vehicle's Decorator Pattern
 	 * @author muxisar
 	 */
-	public class StandardVehicle extends Sprite implements IVehicle {
+	public class StandardVehicle extends Sprite/* implements IVehicle */{
 		
 		/**
 		 * Reference to the main game
@@ -56,6 +57,8 @@ package imac.diehardkart.vehicle {
 		public static const STANDARD_MAX_DAMAGES : Number = 10;
 		public static const STANDARD_EXPLOSION_RANGE : Number = 20;
 		
+		private var m_dead : Boolean;
+		
 		private var m_skin : SkinVehicle;
 		
 		/** 
@@ -76,20 +79,20 @@ package imac.diehardkart.vehicle {
 
 			m_movement = movement;
 			m_life = life;
-			m_coeffLifeLost = coeffLifeLost;
+			m_coeffLifeLost = Math.abs(coeffLifeLost);
 			m_maxDamages = maxDamages;
 			m_explosionRange = explosionRange;
 			m_ctrFramesSinceLastMove = 0;
 			m_waitingFrames = waitingFrames;
 			m_skin = new SkinVehicle();
 			addChild(m_skin);
+			m_dead = false;
 			
 			addEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);
 		}
 		
 		public function e_addedToStage(evt:Event) : void {
-			m_skin.gotoAndPlay(FrameLabel.INIT_FRAME);
 			addEventListener(Event.ENTER_FRAME, e_action);
 		}
 		
@@ -98,29 +101,37 @@ package imac.diehardkart.vehicle {
 		}
 		
 		public function e_action(evt:Event) : void {
-			++m_ctrFramesSinceLastMove;
-			if (m_ctrFramesSinceLastMove == m_waitingFrames) {
-				x = m_movement.make(x, Movement.AXIS_X);
-				y = m_movement.make(y, Movement.AXIS_Y);
-				m_ctrFramesSinceLastMove = 0;
+			looseLife();
+			if (!m_dead) {
+				++m_ctrFramesSinceLastMove;
+				
+				if (m_ctrFramesSinceLastMove == m_waitingFrames) {
+					x = m_movement.make(x, Movement.AXIS_X);
+					y = m_movement.make(y, Movement.AXIS_Y);
+					m_ctrFramesSinceLastMove = 0;
+				}
+					
+				if (m_life <= 0)
+					explode();
 			}
-			if (m_life <= 0) {
-				explode();
-			}
-			if (m_skin.currentFrameLabel == FrameLabel.EXPLOSION_DONE_FRAME)
-				die();
+			
+			if (m_skin.currentFrameLabel == FrameLabel.EXPLOSION_DONE)
+				destruct();
 		}
+		
 		public function explode() : void {
-			m_skin.gotoAndPlay(FrameLabel.EXPLOSION_FRAME);
+			m_dead = true;
+			m_skin.gotoAndPlay(FrameLabel.EXPLOSION);
 		}
 		
 		public function looseLife() : void {
 			m_life = m_life - (1 * m_coeffLifeLost);
 		}
 		
-		public function die() : void {
+		public function destruct() : void {
 			removeEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
 			removeEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);
+			dispatchEvent(new CustomEvent(CustomEvent.DEAD));
 		}
 	}
 }

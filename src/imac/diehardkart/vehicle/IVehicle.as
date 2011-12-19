@@ -7,10 +7,8 @@ package imac.diehardkart.vehicle {
 	 */ 
 	public interface IVehicle {
 		function e_action(evt:Event) : void;
-		function e_addedToStage(evt:Event) : void;
-		function e_removedFromStage(evt:Event) : void;
 		function explode() : void;
-		function die() : void;
+		function e_die(evt:Event) : void;
 		function looseLife() : void;
 	}
 

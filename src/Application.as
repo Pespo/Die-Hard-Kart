@@ -1,5 +1,6 @@
 ﻿package 
 {
+	import net.hires.debug.Stats;
 	import imac.diehardkart.game.Game;
 	import flash.display.Sprite;
 	import imac.diehardkart.utils.Movement;
@@ -9,7 +10,9 @@
 	{		
 		public function Application() {
 			
-			var g : Game = new Game(stage);
+			addChild(new Stats());
+			var g : Game = new Game();
+			addChild(g);
 		}
 	}
 }

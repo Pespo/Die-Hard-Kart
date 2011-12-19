@@ -94,9 +94,6 @@ package imac.diehardkart.bullet {
 			if (x < 0 || y < 0 || x > GAME_REF.stage.stageWidth || y > GAME_REF.stage.stageHeight) {
 				die();
 			}
-
-			if (currentFrameLabel == FrameLabel.EXPLOSION_DONE_FRAME)
-				die();
 		}
 		
 		public function get movement() : Movement {
@@ -113,7 +110,7 @@ package imac.diehardkart.bullet {
 		 */
 
 		public function explode() : void {
-			gotoAndPlay(FrameLabel.EXPLOSION_FRAME);
+			gotoAndPlay(FrameLabel.EXPLOSION);
 			dispatchEvent(new Event(CustomEvent.EXPLOSION));
 		}
 
