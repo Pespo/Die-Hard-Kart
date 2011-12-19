@@ -1,6 +1,7 @@
 package imac.diehardkart.bullet {
 	import flash.events.Event;
 	import imac.diehardkart.utils.Movement;
+
 	/** 
 	 * Interface of the bullet's Decorator Pattern
 	 * @author muxisar
