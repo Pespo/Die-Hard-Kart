@@ -20,34 +20,42 @@ package imac.diehardkart.vehicle {
 		/**
 		 * Vehicle movement
 		 */
-		protected var m_movement : Movement;
+		private var m_movement : Movement;
 		
 		/**
 		 * For counting frames
 		 */
-		protected var m_ctrFramesSinceLastMove : uint;
+		private var m_ctrFramesSinceLastMove : uint;
 		/**
 		 * Number of frames to wait before act
 		 */
-		protected var m_waitingFrames : uint;
+		private var m_waitingFrames : uint;
 		
 		/**
 		 * Current life of vehicle
 		 */
-		protected var m_life : Number;
+		private var m_life : Number;
 		/**
 		 * Coeff of life losed when it happens
 		 */
-		protected var m_coeffLifeLost : Number;
+		private var m_coeffLifeLost : Number;
 		
 		/**
 		 * Damage caused when it explodes
 		 */
-		protected var m_maxDamages : Number;
+		private var m_maxDamages : Number;
 		/**
 		 * Ray of explosion
 		 */
-		protected var m_explosionRange : Number;
+		private var m_explosionRange : Number;
+		
+		/**
+		 * Standard values
+		 */
+		public static const STANDARD_LIFE : Number = 100;
+		public static const STANDARD_COEFF_LIFE_LOST : Number = 1;
+		public static const STANDARD_MAX_DAMAGES : Number = 10;
+		public static const STANDARD_EXPLOSION_RANGE : Number = 20;
 		
 		/** 
 		 * Construct a StandardVehicle
@@ -60,8 +68,10 @@ package imac.diehardkart.vehicle {
 		 */
 		public function StandardVehicle(movement:Movement,
 										waitingFrames:uint = 10,
-										life:Number = 100, coeffLifeLost:Number = 1,
-										maxDamages:Number = 10, explosionRange:Number = 20) {			
+										life:Number = STANDARD_LIFE,
+										coeffLifeLost:Number = STANDARD_COEFF_LIFE_LOST,
+										maxDamages:Number = STANDARD_MAX_DAMAGES,
+										explosionRange:Number = STANDARD_EXPLOSION_RANGE) {			
 			m_movement = movement;
 			m_life = life;
 			m_coeffLifeLost = coeffLifeLost;

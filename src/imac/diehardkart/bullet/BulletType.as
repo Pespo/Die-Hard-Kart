@@ -5,6 +5,6 @@ package imac.diehardkart.bullet {
 	 * @author muxisar
 	 */
 	public class BulletType {
-		public static var STANDARD_BULLET : Number = 0; 
+		public static const STANDARD_BULLET : Number = 0; 
 	}
 }
