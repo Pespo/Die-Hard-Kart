@@ -1,16 +1,15 @@
 package imac.diehardkart.vehicle {
-	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import imac.diehardkart.game.Game;
 	import imac.diehardkart.utils.FrameLabel;
 	import imac.diehardkart.utils.Movement;
-	import imac.diehardkart.utils.CustomEvent;
 	import flash.events.Event;
 
 	/**
 	 * The common vehicle in the vehicle's Decorator Pattern
 	 * @author muxisar
 	 */
-	public class StandardVehicle extends MovieClip implements IVehicle {
+	public class StandardVehicle extends Sprite implements IVehicle {
 		
 		/**
 		 * Reference to the main game
@@ -57,6 +56,8 @@ package imac.diehardkart.vehicle {
 		public static const STANDARD_MAX_DAMAGES : Number = 10;
 		public static const STANDARD_EXPLOSION_RANGE : Number = 20;
 		
+		private var m_skin : SkinVehicle;
+		
 		/** 
 		 * Construct a StandardVehicle
 		 * @param movement <code>Movement</code> describing the vehicle's movement
@@ -72,6 +73,7 @@ package imac.diehardkart.vehicle {
 										coeffLifeLost:Number = STANDARD_COEFF_LIFE_LOST,
 										maxDamages:Number = STANDARD_MAX_DAMAGES,
 										explosionRange:Number = STANDARD_EXPLOSION_RANGE) {			
+
 			m_movement = movement;
 			m_life = life;
 			m_coeffLifeLost = coeffLifeLost;
@@ -79,13 +81,15 @@ package imac.diehardkart.vehicle {
 			m_explosionRange = explosionRange;
 			m_ctrFramesSinceLastMove = 0;
 			m_waitingFrames = waitingFrames;
+			m_skin = new SkinVehicle();
+			addChild(m_skin);
 			
 			addEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);
 		}
 		
 		public function e_addedToStage(evt:Event) : void {
-			gotoAndPlay(FrameLabel.INIT_FRAME);
+			m_skin.gotoAndPlay(FrameLabel.INIT_FRAME);
 			addEventListener(Event.ENTER_FRAME, e_action);
 		}
 		
@@ -103,13 +107,11 @@ package imac.diehardkart.vehicle {
 			if (m_life <= 0) {
 				explode();
 			}
-			if (currentFrameLabel == FrameLabel.EXPLOSION_DONE_FRAME)
+			if (m_skin.currentFrameLabel == FrameLabel.EXPLOSION_DONE_FRAME)
 				die();
 		}
-
 		public function explode() : void {
-			gotoAndPlay(FrameLabel.EXPLOSION_FRAME);
-			dispatchEvent(new Event(CustomEvent.EXPLOSION));
+			m_skin.gotoAndPlay(FrameLabel.EXPLOSION_FRAME);
 		}
 		
 		public function looseLife() : void {

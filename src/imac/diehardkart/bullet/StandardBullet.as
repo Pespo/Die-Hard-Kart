@@ -1,10 +1,7 @@
 package imac.diehardkart.bullet {
-	import flash.display.MorphShape;
-	import imac.diehardkart.game.Game;
 	import imac.diehardkart.utils.CustomEvent;
+	import imac.diehardkart.game.Game;
 	import flash.display.MovieClip;
-	import imac.diehardkart.bullet.Bullet;
-	import imac.diehardkart.bullet.BulletType;
 	import imac.diehardkart.utils.Movement;
 	import flash.events.Event;
 	import imac.diehardkart.utils.FrameLabel;
@@ -13,7 +10,7 @@ package imac.diehardkart.bullet {
 	 * The common bullet in the bullet's Decorator Pattern
 	 * @author muxisar
 	 */
-	public class StandardBullet extends MovieClip implements Bullet {
+	public class StandardBullet extends MovieClip implements IBullet {
 		
 		/**
 		 * Reference to the main game
@@ -76,6 +73,7 @@ package imac.diehardkart.bullet {
 		 * @return void
 		 * @param evt <code>Event</code> act on removed from the stage
 		 */
+		
 		public function e_removedFromStage(evt:Event) : void {			
 			removeEventListener(Event.ENTER_FRAME, e_action);
 		}
@@ -94,7 +92,7 @@ package imac.diehardkart.bullet {
 			}
 
 			if (x < 0 || y < 0 || x > GAME_REF.stage.stageWidth || y > GAME_REF.stage.stageHeight) {
-				explode();
+				die();
 			}
 
 			if (currentFrameLabel == FrameLabel.EXPLOSION_DONE_FRAME)

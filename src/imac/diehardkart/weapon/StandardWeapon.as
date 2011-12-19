@@ -1,14 +1,16 @@
 package imac.diehardkart.weapon {
+	import flash.display.DisplayObject;
+	import com.senocular.display.Duplicator;
+	import imac.diehardkart.utils.FrameLabel;
 	import flash.geom.Point;
-	import imac.diehardkart.bullet.Bullet;
+	import imac.diehardkart.bullet.IBullet;
 	import imac.diehardkart.game.Game;
-	import imac.diehardkart.bullet.BulletType;
 	import flash.display.MovieClip;
 	import imac.diehardkart.utils.Movement;
-	import imac.diehardkart.weapon.Weapon;
+	import imac.diehardkart.weapon.IWeapon;
 	import flash.events.Event;
 
-	public class StandardWeapon extends MovieClip implements Weapon {
+	public class StandardWeapon extends MovieClip implements IWeapon {
 		
 		/**
 		 * Reference to the main game
@@ -23,7 +25,7 @@ package imac.diehardkart.weapon {
 		/**
 		 * Bullet to launch
 		 */
-		private var m_bullet : Bullet;	
+		private var m_bullet : IBullet;	
 		
 		/**
 		 * Rate of fire
@@ -42,7 +44,7 @@ package imac.diehardkart.weapon {
 		 * @param shootRate <code>Number</code> default value is 1
 		 */
 		public function StandardWeapon(movement:Movement,
-										bullet:Bullet,
+										bullet:IBullet,
 										shootRate:Number = STANDARD_SHOOT_RATE) {
 			m_movement = movement;					
 			m_bullet = bullet;
@@ -61,21 +63,21 @@ package imac.diehardkart.weapon {
 			removeEventListener(Event.ENTER_FRAME, e_shoot);
 		}
 		
-		public function shoot() : void {
-			var bullet : Bullet = Duplicator.duplicateDisplayObject(m_bullet);
+		public function e_shoot() : void {
+			var bullet : IBullet = Duplicator.duplicateDisplayObject(m_bullet);
 			var bulletStartPosition : Point = new Point;	
-			bulletStartPosition = localToGlobal(new Point	(this.x, this.y));
+			bulletStartPosition = localToGlobal(new Point(this.x, this.y));
 			bullet.x = bulletStartPosition.x;
 			bullet.y = bulletStartPosition.y;
 			bullet.m_movement.setDirection(m_movement.dx, m_movement.dy);
 			GAME_REF.stage.addChild(bullet);
 		}
 		
-		public function get movement():void {
+		public function get movement() : Movement {
 			return m_movement;
 		}
 		
-		public function set movement(movement:Movement) : Movement {
+		public function set movement(movement:Movement) : void {
 			m_movement = movement;
 		}
 	}

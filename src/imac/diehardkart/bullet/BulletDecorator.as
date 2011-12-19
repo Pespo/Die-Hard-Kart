@@ -1,24 +1,19 @@
 package imac.diehardkart.bullet {
-	import flash.display.MovieClip;
-	import imac.diehardkart.bullet.Bullet;
+	import imac.diehardkart.bullet.IBullet;
 	
 	/**
 	 * Decorator parent for all the bullet's Decorator Pattern
 	 * @author muxisar
 	 */
-	public class BulletDecorator extends MovieClip {
-		private var m_decoratedBullet : Bullet;
+	public class BulletDecorator implements IBullet {
+		private var m_decoratedBullet : IBullet;
 		
 		/**
 		 * Construct a BulletDecorator
 		 * @param decoratedBullet an instance of <code>imac.diehardkart.bullet.StandardBullet</code>
 		 */
-		public function BulletDecorator(decoratedBullet : Bullet) {
+		public function BulletDecorator(decoratedBullet:IBullet) {
 			m_decoratedBullet = decoratedBullet;
-		}
-		
-		public function move() : void {
-			m_decoratedBullet.move();
 		}
 		
 		public function explode() : void {

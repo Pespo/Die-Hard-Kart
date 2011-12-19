@@ -1,4 +1,5 @@
 package imac.diehardkart.vehicle {
+	import flash.events.Event;
 	import flash.display.MovieClip;
 
 	/**
