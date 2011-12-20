@@ -67,10 +67,6 @@ package imac.diehardkart.vehicle {
 			throw new Event("This method must be overriden");
 		}
 		
-		protected function e_die(evt:Event) : void {
-			throw new Event("This method must be overriden");
-		}
-		
 		public function looseLife() : void {
 			throw new Event("This method must be overriden");
 		}
