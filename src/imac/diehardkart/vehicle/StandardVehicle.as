@@ -35,6 +35,16 @@ package imac.diehardkart.vehicle {
 			m_waitingFrames = waitingFrames;
 			m_skin = new SkinVehicle();
 			addChild(m_skin);
+			trace(m_movement.dx + " - " + m_movement.dy);
+			
+			if (m_movement.dx >= 0) {
+				rotation = (180 * Math.asin(m_movement.dy) / Math.PI);
+			} else if (m_movement.dx <= 0 && m_movement.dy >= 0) {
+				rotation = - (180 * Math.asin(m_movement.dx) / Math.PI) + 90;
+			} else if (m_movement.dx <= 0 && m_movement.dy <= 0) {
+				rotation = - (180 * Math.asin(m_movement.dy) / Math.PI) + 180;
+			}
+			
 			m_dead = false;
 			
 			addEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
