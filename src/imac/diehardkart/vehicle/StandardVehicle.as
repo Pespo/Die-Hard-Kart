@@ -8,7 +8,7 @@ package imac.diehardkart.vehicle {
 	 * The common vehicle in the vehicle's Decorator Pattern
 	 * @author muxisar
 	 */
-	public class StandardVehicle extends IVehicle{
+	public class StandardVehicle extends IVehicle {
 		
 		/** 
 		 * Construct a StandardVehicle
