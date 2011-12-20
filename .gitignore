@@ -1,3 +1,6 @@
 ._*
 .project
 .settings
+*.swf
+*.swc
+*.fla
