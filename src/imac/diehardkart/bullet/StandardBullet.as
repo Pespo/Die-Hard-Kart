@@ -26,8 +26,8 @@ package imac.diehardkart.bullet {
 			m_ctrFramesSinceLastMove = 0;
 			m_damage = damage;
 			m_skin = new SkinBullet();
-			addChild(m_skin);
 			m_dead = false;
+			addChild(m_skin);
 			
 			if (m_movement.dx >= 0) {
 				rotation = (180 * Math.asin(m_movement.dy) / Math.PI);
@@ -46,7 +46,7 @@ package imac.diehardkart.bullet {
 		 * @return void
 		 * @param evt <code>Event</code> act on added to the stage
 		 */
-		public function e_addedToStage(evt:Event) : void {
+		public override function e_addedToStage(evt:Event) : void {
 			addEventListener(Event.ENTER_FRAME, e_action);
 		}
 		
@@ -55,7 +55,7 @@ package imac.diehardkart.bullet {
 		 * @return void
 		 * @param evt <code>Event</code> act on removed from the stage
 		 */
-		public function e_removedFromStage(evt:Event) : void {			
+		public override function e_removedFromStage(evt:Event) : void {			
 			removeEventListener(Event.ENTER_FRAME, e_action);
 		}
 		
@@ -64,7 +64,7 @@ package imac.diehardkart.bullet {
 		 * @return void
 		 * @param evt <code>Event</code> act on each frame
 		 */
-		protected override function e_action(evt:Event) : void {
+		public override function e_action(evt:Event) : void {
 			if (!m_dead) {
 				++m_ctrFramesSinceLastMove;
 				if (m_ctrFramesSinceLastMove == m_waitingFrames) {
@@ -72,7 +72,6 @@ package imac.diehardkart.bullet {
 					y = m_movement.make(y, Movement.AXIS_Y);
 					m_ctrFramesSinceLastMove = 0;
 				}
-					
 				if (x < 0 || y < 0 || x > GAME_REF.stage.stageWidth || y > GAME_REF.stage.stageHeight)
 					destruct();
 			}
@@ -82,11 +81,19 @@ package imac.diehardkart.bullet {
 			}
 		}
 		
+		public override function get movement() : Movement {
+			return m_movement;
+		}
+		
+		public override function set movement(movement:Movement) : void {
+			m_movement = movement;
+		}
+		
 		/**
 		 * Explode the bullet when it hits a vehicle
 		 * @return void
 		 */
-		protected override function explode() : void {
+		public override function explode() : void {
 			m_dead = true;
 			m_skin.gotoAndPlay(FrameLabel.EXPLOSION);
 		}
@@ -95,7 +102,7 @@ package imac.diehardkart.bullet {
 		 * Make the bullet die when after exploding or when out of the screen
 		 * @return void
 		 */
-		private function destruct() : void {
+		public override function destruct() : void {
 			dispatchEvent(new CustomEvent(CustomEvent.DEAD));
 			removeEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
 			removeEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);

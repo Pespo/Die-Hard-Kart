@@ -1,6 +1,9 @@
 package imac.diehardkart.game {
+	import flash.display.MorphShape;
 	import flash.display.Stage;
 	import flash.events.FocusEvent;
+	import imac.diehardkart.bullet.BouncingBullet;
+	import imac.diehardkart.bullet.BulletDecorator;
 	import imac.diehardkart.vehicle.IVehicle;
 	import imac.diehardkart.bullet.IBullet;
 	import flash.display.Sprite;
@@ -40,15 +43,23 @@ package imac.diehardkart.game {
 
 			IBullet.GAME_REF = this;
 			var st : StandardVehicle = new StandardVehicle(new Movement(1, 0.5, -0.5), 1, 10);
-			var stdBullet : StandardBullet = new StandardBullet(new Movement(1, 0.5, 0.5), 1, 1);
 			st.addEventListener(CustomEvent.DEAD, e_deadElement);
 			st.x = 350;
 			st.y = 50;
 			addChild(st);
+			
+			var stdBullet : StandardBullet = new StandardBullet(new Movement(1, 0.5, 0.0), 1, 1);
 			stdBullet.addEventListener(CustomEvent.DEAD, e_deadElement);
-			stdBullet.x = 250;
-			st.y = 100;
+			stdBullet.x = 50;
+			stdBullet.y = 400;
 			addChild(stdBullet);
+			
+			var bouncingBullet : IBullet = new StandardBullet(new Movement(1, 0.5, 0.0), 1, 1);
+			bouncingBullet = new BouncingBullet(bouncingBullet);
+			bouncingBullet.addEventListener(CustomEvent.DEAD, e_deadElement);
+			bouncingBullet.x = 450;
+			bouncingBullet.y = 400;
+			addChild(bouncingBullet);
 		}
 		
 		private function e_deadElement(evt:CustomEvent) : void {

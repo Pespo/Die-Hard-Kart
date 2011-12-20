@@ -41,13 +41,31 @@ package imac.diehardkart.bullet {
 		protected var m_dead : Boolean;
 		protected var m_skin : SkinBullet;
 		
-		
-		
-		protected function e_action(evt:Event) : void {
+		public function get movement() : Movement {
 			throw new Event("This method must be overriden");
 		}
 		
-		protected function explode() : void {
+		public function set movement(movement:Movement) : void {
+			throw new Event("This method must be overriden");
+		}
+		
+		public function e_action(evt:Event) : void {
+			throw new Event("This method must be overriden");
+		}
+		
+		public function explode() : void {
+			throw new Event("This method must be overriden");
+		}
+		
+		public function e_addedToStage(evt:Event) : void {
+			throw new Event("This method must be overriden");
+		}
+		
+		public function e_removedFromStage(evt:Event) : void {			
+			throw new Event("This method must be overriden");
+		}
+		
+		public function destruct() : void {
 			throw new Event("This method must be overriden");
 		}
 	}
