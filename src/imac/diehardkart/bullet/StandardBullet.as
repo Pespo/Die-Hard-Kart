@@ -29,6 +29,14 @@ package imac.diehardkart.bullet {
 			addChild(m_skin);
 			m_dead = false;
 			
+			if (m_movement.dx >= 0) {
+				rotation = (180 * Math.asin(m_movement.dy) / Math.PI);
+			} else if (m_movement.dx <= 0 && m_movement.dy >= 0) {
+				rotation = - (180 * Math.asin(m_movement.dx) / Math.PI) + 90;
+			} else if (m_movement.dx <= 0 && m_movement.dy <= 0) {
+				rotation = - (180 * Math.asin(m_movement.dy) / Math.PI) + 180;
+			}
+			
 			addEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);
 		}
@@ -64,9 +72,6 @@ package imac.diehardkart.bullet {
 					y = m_movement.make(y, Movement.AXIS_Y);
 					m_ctrFramesSinceLastMove = 0;
 				}
-				
-				if (x > 350)
-					explode();
 					
 				if (x < 0 || y < 0 || x > GAME_REF.stage.stageWidth || y > GAME_REF.stage.stageHeight)
 					destruct();
