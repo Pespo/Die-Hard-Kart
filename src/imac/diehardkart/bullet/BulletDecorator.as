@@ -1,67 +1,57 @@
 package imac.diehardkart.bullet {
-	import imac.diehardkart.utils.CustomEvent;
-	import flash.events.Event;
+	import flash.display.Stage;
 	import imac.diehardkart.utils.Movement;
-	import imac.diehardkart.bullet.IBullet;
-	
-	/**
-	 * Decorator parent for all the bullet's Decorator Pattern
-	 * @author muxisar
-	 */
-	public class BulletDecorator extends IBullet {
+
+	public class BulletDecorator implements IBullet {
+		
 		protected var m_decoratedBullet : IBullet;
 		
 		public function BulletDecorator(decoratedBullet:IBullet) {
 			m_decoratedBullet = decoratedBullet;
-			addChild(decoratedBullet);
-			addEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
-			addEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);
 		}
 		
-		public function get decorated() : IBullet {
-			return m_decoratedBullet;
+		public function loop() : void {
+			m_decoratedBullet.loop();
 		}
 		
-		public override function get movement() : Movement {
+		public function get stage() : Stage {
+			return m_decoratedBullet.stage;
+		}
+		
+		public function get x() : Number {
+			return m_decoratedBullet.x;
+		}
+		
+		public function set x(x:Number) : void {
+			m_decoratedBullet.x = x;
+		}
+		
+		public function get y() : Number {
+			return m_decoratedBullet.y;
+		}
+		
+		public function set y(y:Number) : void {
+			m_decoratedBullet.y = y;
+		}
+		
+		public function get movement() : Movement {
 			return m_decoratedBullet.movement;
 		}
 		
-		public override function set movement(movement:Movement) : void {
+		public function set movement(movement:Movement) : void {
 			m_decoratedBullet.movement = movement;
 		}
 		
-		public override function e_action(evt:Event) : void {
-			parent.addChild(m_decoratedBullet);
-			//m_decoratedBullet.e_action(evt);
+		public function display() : void {
+			m_decoratedBullet.display();
 		}
 		
-		public override function explode() : void {
-			m_decoratedBullet.explode();
+		public function get rotation() : Number {
+			return m_decoratedBullet.rotation;
 		}
 		
-		public override function set x(x:Number) : void {
-			super.x = x;
-			decorated.x = x;
-		}
-		
-		public override function set y(y:Number) : void {
-			super.y = y;
-			decorated.y = y;
-		}
-		
-		public override function e_addedToStage(evt:Event) : void {
-			addEventListener(Event.ENTER_FRAME, e_action);
-		}
-		
-		public override function e_removedFromStage(evt:Event) : void {			
-			removeEventListener(Event.ENTER_FRAME, e_action);
-		}
-		
-		public override function destruct() : void {
-			trace("destruct1");			
-			dispatchEvent(new CustomEvent(CustomEvent.DEAD));			
-			removeEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
-			removeEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);
+		public function set rotation(r:Number) : void {
+			m_decoratedBullet.rotation = r;
 		}
 	}
 }

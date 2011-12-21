@@ -7,13 +7,13 @@ package imac.diehardkart.utils {
 		private var m_speed : Number;
 		public static const AXIS_X : String = "axe x";
 		public static const AXIS_Y : String = "axe y";
-		public static const STANDARD_SPEED : Number = 0.5;
+		public static const STANDARD_SPEED : Number = 5;
 				
 		public function Movement(speed:Number = STANDARD_SPEED, dx:Number = 1, dy:Number = 0) {
 			var norm : Number = Math.sqrt(dx * dx + dy * dy);
 			m_dx = (norm == 0) ? 0 : dx / norm;
 			m_dy = (norm == 0) ? 0 : dy / norm;
-			m_speed = (speed >= 0 && speed <= 1) ? speed : STANDARD_SPEED; 
+			m_speed = (speed >= 0 && speed <= 10) ? speed : STANDARD_SPEED; 
 		}
 		
 		public function get dx() : Number {
@@ -35,7 +35,7 @@ package imac.diehardkart.utils {
 		}
 		
 		public function set speed(s:Number) : void {
-			m_speed = (s >= 0 && s <= 1) ? s : STANDARD_SPEED; 
+			m_speed = (s >= 0 && s <= 10) ? s : STANDARD_SPEED; 
 		}
 		
 		public function make(current:Number, axis:String) : Number {
