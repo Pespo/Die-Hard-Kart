@@ -7,7 +7,7 @@ package imac.diehardkart.weapon {
 	 * @author muxisar
 	 */ 
 	public interface IWeapon {
-		function shoot() : void;
+		function e_shoot(evt:Event) : void;
 		function e_addedToStage(evt:Event) : void;
 		function e_removedFromStage(evt:Event) : void;
 		function get movement() : Movement;

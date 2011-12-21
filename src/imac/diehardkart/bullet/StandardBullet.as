@@ -1,8 +1,5 @@
 package imac.diehardkart.bullet {
-	import flash.desktop.ClipboardTransferMode;
 	import imac.diehardkart.utils.CustomEvent;
-	import imac.diehardkart.game.Game;
-	import flash.display.MovieClip;
 	import imac.diehardkart.utils.Movement;
 	import flash.events.Event;
 	import imac.diehardkart.utils.FrameLabel;
@@ -21,6 +18,7 @@ package imac.diehardkart.bullet {
 		public function StandardBullet(movement:Movement,
 										damage:Number = STANDARD_DAMAGE,
 										waitingFrames:uint = 10) {
+						
 			m_movement = movement;
 			m_waitingFrames = waitingFrames;
 			m_ctrFramesSinceLastMove = 0;
@@ -95,6 +93,7 @@ package imac.diehardkart.bullet {
 		 */
 		public override function explode() : void {
 			m_dead = true;
+			GAME_REF.playerBullets.splice(GAME_REF.playerBullets.indexOf(this), 1);
 			m_skin.gotoAndPlay(FrameLabel.EXPLOSION);
 		}
 
@@ -103,6 +102,7 @@ package imac.diehardkart.bullet {
 		 * @return void
 		 */
 		public override function destruct() : void {
+			trace("destruct2");
 			dispatchEvent(new CustomEvent(CustomEvent.DEAD));
 			removeEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
 			removeEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);

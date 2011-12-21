@@ -1,31 +1,35 @@
 package imac.diehardkart.vehicle {
-	import flash.events.Event;
 
-	/**
-	 * Decorator parent for all the vehicle's Decorator Pattern
-	 * @author muxisar
-	 */
-	public class VehicleDecorator extends IVehicle {
-		private var m_decoratedVehicle : IVehicle;
+	public class VehicleDecorator implements IVehicle {
+		
+		protected var m_decoratedVehicle : IVehicle;
 		
 		public function VehicleDecorator(decoratedVehicle:IVehicle) {
 			m_decoratedVehicle = decoratedVehicle;
 		}
 		
-		private function e_action(evt:Event) : void {
-			m_decoratedVehicle.e_action(evt);
+		public function loop() : void {
+			m_decoratedVehicle.loop();
 		}
 		
-		private function explode() : void {
-			m_decoratedVehicle.explode();
+		public function set x(x:Number) : void {
+			m_decoratedVehicle.x = x;
 		}
 		
-		private function e_die(evt:Event) : void {
-			m_decoratedVehicle.e_die(evt);			
+		public function set y(y:Number) : void {
+			m_decoratedVehicle.y = y;
 		}
 		
-		public override function looseLife() : void {
-			m_decoratedVehicle.looseLife();
+		public function display() : void {
+			m_decoratedVehicle.display();
+		}
+		
+		public function set rotation(r:Number) : void {
+			m_decoratedVehicle.rotation = r;
+		}
+		
+		public function get rotation() : Number {
+			return m_decoratedVehicle.rotation;
 		}
 	}
 }

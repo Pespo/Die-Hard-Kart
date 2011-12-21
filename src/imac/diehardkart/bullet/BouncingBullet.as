@@ -16,9 +16,11 @@ package imac.diehardkart.bullet {
 		}
 		
 		public override function e_action(evt:Event) : void {
-			//super.e_action(evt);
-			trace("qiug");
-			//m_decoratedBullet.e_action(evt);
+			trace(m_decoratedBullet.x);
+		}
+		
+		public override function get decorated() : IBullet {
+			return m_decoratedBullet;
 		}
 	}
 }

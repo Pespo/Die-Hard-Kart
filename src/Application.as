@@ -9,7 +9,7 @@
 		public function Application() {
 			
 			addChild(new Stats());
-			var g : Game = new Game(this.stage);
+			var g : Game = new Game(stage);
 			addChild(g);
 		}
 	}

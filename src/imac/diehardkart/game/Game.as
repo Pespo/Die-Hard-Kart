@@ -1,78 +1,40 @@
 package imac.diehardkart.game {
-	import flash.display.MorphShape;
-	import flash.display.Stage;
-	import flash.events.FocusEvent;
-	import imac.diehardkart.bullet.BouncingBullet;
-	import imac.diehardkart.bullet.BulletDecorator;
+	import imac.diehardkart.vehicle.BlindVehicle;
+	import flash.events.TimerEvent;
 	import imac.diehardkart.vehicle.IVehicle;
-	import imac.diehardkart.bullet.IBullet;
+	import flash.utils.Timer;
+	import flash.display.Stage;
 	import flash.display.Sprite;
-	import flash.display.DisplayObject;
-	import imac.diehardkart.utils.CustomEvent;
-	import imac.diehardkart.utils.Movement;
-	import imac.diehardkart.bullet.StandardBullet;
 	import imac.diehardkart.vehicle.StandardVehicle;
 	
 	public class Game extends Sprite {
 		
-		public static var m_stage:Stage;
+		private var m_vehicles : Vector.<IVehicle>;
 		
 		public function Game(stage:Stage) {
-			m_stage = stage;
-			IVehicle.GAME_REF = this;
-			var st1 : StandardVehicle = new StandardVehicle(new Movement(1, 0.1, 0.3), 1, 10);
-			var st2 : StandardVehicle = new StandardVehicle(new Movement(1, -0.5, 0.2), 1, 10);
-			var st3 : StandardVehicle = new StandardVehicle(new Movement(1, 0.1, -0.4), 1, 10);
-			var st4 : StandardVehicle = new StandardVehicle(new Movement(1, -0.5, -0.7), 1, 10);
-			st1.addEventListener(CustomEvent.DEAD, e_deadElement);
-			st2.addEventListener(CustomEvent.DEAD, e_deadElement);
-			st3.addEventListener(CustomEvent.DEAD, e_deadElement);
-			st4.addEventListener(CustomEvent.DEAD, e_deadElement);
-			st1.x = 200;
-			st1.y = 200;
-			st2.x = 200;
-			st2.y = 200;
-			st3.x = 200;
-			st3.y = 200;
-			st4.x = 200;
-			st4.y = 200;
-			addChild(st1);
-			addChild(st2);
-			addChild(st3);
-			addChild(st4);
-
-			IBullet.GAME_REF = this;
-			var st : StandardVehicle = new StandardVehicle(new Movement(1, 0.5, -0.5), 1, 10);
-			st.addEventListener(CustomEvent.DEAD, e_deadElement);
-			st.x = 350;
-			st.y = 50;
-			addChild(st);
+			m_vehicles = new Vector.<IVehicle>();
+			StandardVehicle.STAGE = stage;
+			StandardVehicle.GAME = this;
 			
-			var stdBullet : StandardBullet = new StandardBullet(new Movement(1, 0.5, 0.0), 1, 1);
-			stdBullet.addEventListener(CustomEvent.DEAD, e_deadElement);
-			stdBullet.x = 50;
-			stdBullet.y = 400;
-			addChild(stdBullet);
+			var genTimer : Timer = new Timer(1, 0);
+			genTimer.addEventListener(TimerEvent.TIMER, e_loop);
+			genTimer.start();
 			
-			var bouncingBullet : IBullet = new StandardBullet(new Movement(1, 0.5, 0.0), 1, 1);
-			bouncingBullet = new BouncingBullet(bouncingBullet);
-			bouncingBullet.addEventListener(CustomEvent.DEAD, e_deadElement);
-			bouncingBullet.x = 450;
-			bouncingBullet.y = 400;
-			addChild(bouncingBullet);
+			var st : BlindVehicle = new BlindVehicle(new StandardVehicle(new XMLList));
+			st.x = 100;
+			st.y = 100;
+			m_vehicles.push(st);
+			st.display();			
 		}
 		
-		private function e_deadElement(evt:CustomEvent) : void {
-			if (contains(evt.target as DisplayObject)) {
-				var index : int = getChildIndex(evt.target as DisplayObject);
-				var child : DisplayObject = getChildAt(index);
-				removeChildAt(index);
-				child = null;
-			}	
+		private function e_loop(evt:TimerEvent) : void {
+			for each(var vehicle : IVehicle in m_vehicles) {
+				vehicle.loop();
+			}
 		}
 		
-		public function get playerBullets() : Vector.<StandardBullet> {
-			return null;
+		public function get vehicles() : Vector.<IVehicle> {
+			return m_vehicles;
 		}
 	}
 }

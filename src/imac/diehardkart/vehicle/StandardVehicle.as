@@ -1,99 +1,113 @@
 package imac.diehardkart.vehicle {
-	import imac.diehardkart.utils.CustomEvent;
-	import imac.diehardkart.utils.FrameLabel;
+	import flash.display.Stage;
+	import imac.diehardkart.game.Game;
+	import flash.display.MovieClip;
 	import imac.diehardkart.utils.Movement;
-	import flash.events.Event;
 
-	/**
-	 * The common vehicle in the vehicle's Decorator Pattern
-	 * @author muxisar
-	 */
-	public class StandardVehicle extends IVehicle {
+	public class StandardVehicle implements IVehicle {
 		
-		/** 
-		 * Construct a StandardVehicle
-		 * @param movement <code>Movement</code> describing the vehicle's movement
-		 * @param waitingFrames <code>uint</code> default value is 10
-		 * @param life <code>Number</code> default value is 100
-		 * @param coeffLifeLost <code>Number</code> default value is  1
-		 * @param maxDamages <code>Number</code> default value is 10
-		 * @param explosionRange <code>Number</code> default value is 20
-		 */
-		public function StandardVehicle(movement:Movement,
-										waitingFrames:uint = 10,
-										life:Number = STANDARD_LIFE,
-										coeffLifeLost:Number = STANDARD_COEFF_LIFE_LOST,
-										maxDamages:Number = STANDARD_MAX_DAMAGES,
-										explosionRange:Number = STANDARD_EXPLOSION_RANGE) {			
-
-			m_movement = movement;
-			m_life = life;
-			m_coeffLifeLost = Math.abs(coeffLifeLost);
-			m_maxDamages = maxDamages;
-			m_explosionRange = explosionRange;
-			m_ctrFramesSinceLastMove = 0;
-			m_waitingFrames = waitingFrames;
-			m_skin = new SkinVehicle();
-			addChild(m_skin);
-			
+		private var m_display : MovieClip;
+		private var m_movement : Movement;
+		public var m_data : XMLList;
+		public static var GAME : Game;
+		public static var STAGE : Stage;
+		
+		public function StandardVehicle(xml:XMLList) {
+			m_data = xml;
+			m_display = new SkinVehicle();
+			m_movement = new Movement();
+			orientate();
+		}
+		
+		public function display() : void {
+			STAGE.addChild(m_display);
+		}
+		
+		public function set x(x:Number) : void {
+			m_display.x = x;
+		}
+		
+		public function set y(y:Number) : void {
+			m_display.y = y;
+		}
+		
+		public function get x() : Number {
+			return m_display.x;
+		}
+		
+		public function get y() : Number {
+			return m_display.y;
+		}
+		
+		public function set rotation(r:Number) : void {
+			m_display.rotation = r;
+		}
+		
+		public function get rotation() : Number {
+			return m_display.rotation;
+		}
+		
+		public function set width(w:Number) : void {
+			m_display.width = w;
+		}
+		
+		public function get width() : Number {
+			return m_display.width;
+		}
+		
+		public function set height(h:Number) : void {
+			m_display.height = h;
+		}
+		
+		public function get height() : Number {
+			return m_display.height;
+		}
+		
+		private function move() : void {
+			x = m_movement.make(x, Movement.AXIS_X);
+			y = m_movement.make(y, Movement.AXIS_Y);
+		}
+	
+		private function orientate() : void {
 			if (m_movement.dx >= 0) {
 				rotation = (180 * Math.asin(m_movement.dy) / Math.PI);
 			} else if (m_movement.dx <= 0 && m_movement.dy >= 0) {
 				rotation = - (180 * Math.asin(m_movement.dx) / Math.PI) + 90;
-			} else if (m_movement.dx <= 0 && m_movement.dy <= 0) {
+			} else if (m_movement.dx <= 0 && m_movement.dy <= 0) {
 				rotation = - (180 * Math.asin(m_movement.dy) / Math.PI) + 180;
 			}
-			
-			m_dead = false;
-			
-			addEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
-			addEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);
 		}
 		
-		private function e_addedToStage(evt:Event) : void {
-			addEventListener(Event.ENTER_FRAME, e_action);
+		private function hitTest() : void {
+			
 		}
 		
-		private function e_removedFromStage(evt:Event) : void {			
-			removeEventListener(Event.ENTER_FRAME, e_action);
+		public function loop() : void {
+			move();
+			hitTest();
+			outTest();
 		}
 		
-		protected override function e_action(evt:Event) : void {
-			if (!m_dead) {
-				++m_ctrFramesSinceLastMove;
-				
-				if (m_ctrFramesSinceLastMove == m_waitingFrames) {
-					x = m_movement.make(x, Movement.AXIS_X);
-					y = m_movement.make(y, Movement.AXIS_Y);
-					m_ctrFramesSinceLastMove = 0;
-				}
-					
-				if (m_life <= 0)
-					explode();
-			}
-			
-			if (m_skin.currentFrameLabel == FrameLabel.EXPLOSION_DONE) {
-				destruct();
-			}
-			
-			if (x < -width || y < -height || x > GAME_REF.stage.stageWidth || y > GAME_REF.stage.stageHeight) {
+		private function outTest() : void {
+			if (x < -width || y < -height || x > STAGE.stageWidth || y > STAGE.stageHeight) {
 				destruct();
 			}
 		}
 		
-		protected override function explode() : void {
-			m_dead = true;
-			m_skin.gotoAndPlay(FrameLabel.EXPLOSION);
+		/*private function gotoAndPlay(s:String) : void {
+			
 		}
 		
-		public override function looseLife() : void {
-			m_life = m_life - (1 * m_coeffLifeLost);
+		private function explode() : void {
+			gotoAndPlay(FrameLabel.EXPLOSION);
 		}
+		
+		private function looseLife() : void {
+			
+		}*/
 		
 		private function destruct() : void {
-			dispatchEvent(new CustomEvent(CustomEvent.DEAD));
-			removeEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
-			removeEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);
+		
 		}
 	}
 }

@@ -1,5 +1,4 @@
 package imac.diehardkart.weapon {
-	import flash.display.DisplayObject;
 	import com.senocular.display.Duplicator;
 	import imac.diehardkart.utils.FrameLabel;
 	import flash.geom.Point;
@@ -63,14 +62,14 @@ package imac.diehardkart.weapon {
 			removeEventListener(Event.ENTER_FRAME, e_shoot);
 		}
 		
-		public function e_shoot() : void {
+		public function e_shoot(evt:Event) : void {
 			var bullet : IBullet = Duplicator.duplicateDisplayObject(m_bullet);
 			var bulletStartPosition : Point = new Point;	
 			bulletStartPosition = localToGlobal(new Point(this.x, this.y));
 			bullet.x = bulletStartPosition.x;
 			bullet.y = bulletStartPosition.y;
-			bullet.m_movement.setDirection(m_movement.dx, m_movement.dy);
-			GAME_REF.stage.addChild(bullet);
+			bullet.movement.setDirection(m_movement.dx, m_movement.dy);
+			GAME_REF.addChild(bullet);
 		}
 		
 		public function get movement() : Movement {
