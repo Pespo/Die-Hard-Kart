@@ -1,8 +1,10 @@
 package imac.diehardkart.vehicle {
+	import assets.SkinVehicle;
 	import flash.display.Stage;
 	import imac.diehardkart.game.Game;
 	import flash.display.MovieClip;
 	import imac.diehardkart.utils.Movement;
+	import assets.*;
 
 	public class StandardVehicle implements IVehicle {
 		
@@ -14,7 +16,7 @@ package imac.diehardkart.vehicle {
 		
 		public function StandardVehicle(xml:XMLList) {
 			m_data = xml;
-			m_display = new SkinVehicle();
+			m_display = new SkinVehicle;
 			m_movement = new Movement();
 			orientate();
 		}

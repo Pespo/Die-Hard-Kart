@@ -34,6 +34,10 @@ package imac.diehardkart.bullet {
 			m_decoratedBullet.y = y;
 		}
 		
+		public function get damage() : Number {
+			return m_decoratedBullet.damage;
+		}
+		
 		public function get movement() : Movement {
 			return m_decoratedBullet.movement;
 		}

@@ -6,17 +6,20 @@ package imac.diehardkart.bullet {
 	import imac.diehardkart.utils.CustomEvent;
 	import flash.events.Event;
 	import imac.diehardkart.utils.FrameLabel;
+	import flash.utils.getDefinitionByName;
+	import assets.SkinBullet;
 	
 	public class StandardBullet implements IBullet {
 		
 		private var m_display : MovieClip;
 		private var m_movement : Movement;
-		public var m_data : XMLList;
+		private var m_damage : Number;
 		public static var GAME : Game;
 		public static var STAGE : Stage;
+		public static const STANDARD_SKIN : String = "SkinBullet";
 		
-		public function StandardBullet(xml:XMLList) {
-			m_data = xml;
+		public function StandardBullet(movement:Movement, damage:Number = 1, skin:String = STANDARD_SKIN) {			
+			//var skinName : Class = getDefinitionByName(skin) as Class;
 			m_display = new SkinBullet();
 			m_movement = new Movement();
 			orientate();
@@ -44,6 +47,10 @@ package imac.diehardkart.bullet {
 		
 		public function get y() : Number {
 			return m_display.y;
+		}
+		
+		public function get damage() : Number {
+			return m_damage;
 		}
 		
 		public function get movement() : Movement {

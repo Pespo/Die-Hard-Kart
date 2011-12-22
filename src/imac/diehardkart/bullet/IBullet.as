@@ -9,6 +9,7 @@ package imac.diehardkart.bullet {
 		function set x(x:Number) : void;
 		function get y() : Number;
 		function set y(y:Number) : void;
+		function get damage() : Number;
 		function get movement() : Movement;
 		function set movement(movement:Movement) : void;
 		function get rotation() : Number;
