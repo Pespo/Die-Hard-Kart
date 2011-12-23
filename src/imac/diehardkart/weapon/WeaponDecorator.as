@@ -18,25 +18,27 @@ package imac.diehardkart.weapon {
 		public function WeaponDecorator(decoratedVehicle : IWeapon) {
 			m_decoratedWeapon = decoratedVehicle;
 		}
+		
+		public function display() : void {
+			m_decoratedWeapon.display();
+		}
+		
+		function get physics() : Physics {
+			return m_decoratedWeapon.physics;
+		}
+		function set physics(s:Physics) : void {
+			m_decoratedWeapon.physics = s;
+		}
+		function setBullet() : IBullet {
+			m_decoratedWeapon.setBullet();
+		}
 
 		public function shoot() : void {
 			m_decoratedWeapon.shoot();
 		}
-		
-		public function e_addedToStage(evt:Event) : void {
-			m_decoratedWeapon.e_addedToStage(evt);
-		}
-		
-		public function e_removedFromStage(evt:Event) : void {
-			m_decoratedWeapon.e_removedFromStage(evt);
-		}
-		
-		public function get movement():Movement {
-			return m_decoratedWeapon.movement;
-		}
-		
-		public function set movement(movement:Movement) : void {
-			m_decoratedWeapon.movement = movement;
+
+		function loop() : void {
+			m_decoratedWeapon.loop();
 		}
 	}
 }
