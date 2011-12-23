@@ -1,6 +1,6 @@
 package imac.diehardkart.weapon {
 	import com.senocular.display.Duplicator;
-	import imac.diehardkart.utils.FrameLabel;
+	import imac.diehardkart.utils.Labels;
 	import flash.geom.Point;
 	import imac.diehardkart.bullet.IBullet;
 	import imac.diehardkart.game.Game;
@@ -54,7 +54,7 @@ package imac.diehardkart.weapon {
 		}
 		
 		public function e_addedToStage(evt:Event) : void {
-			gotoAndPlay(FrameLabel.INIT_FRAME);
+			gotoAndPlay(Labels.INIT_FRAME);
 			addEventListener(Event.ENTER_FRAME, e_shoot);
 		}
 		

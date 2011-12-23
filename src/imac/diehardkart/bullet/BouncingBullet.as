@@ -1,26 +1,37 @@
 package imac.diehardkart.bullet {
-	import flash.events.Event;
+	import imac.diehardkart.bullet.IBullet;
+	import imac.diehardkart.bullet.BulletDecorator;
 	import imac.diehardkart.utils.Movement;
 	
 	/**
-	 * Bullet Decorator: BoucingBullet Decorator's Pattern
 	 * @author kimo
 	 */
 	public class BouncingBullet extends BulletDecorator {
 		
-		private const MAX_BOUNCING : uint = 5;
+		private const MAX_BOUNCING : uint = 3;
 		private var m_bouncingCounter : uint;
 		
-		public function BouncingBullet(decoratedBullet:IBullet) {
+		public function BouncingBullet(decoratedBullet : IBullet) {
 			super(decoratedBullet);
+			m_bouncingCounter = 0;
 		}
 		
-		public override function e_action(evt:Event) : void {
-			trace(m_decoratedBullet.x);
+		public override function loop() : void {
+			super.loop();
+			bounce();
 		}
 		
-		public override function get decorated() : IBullet {
-			return m_decoratedBullet;
+		private function bounce() : void {
+			if (m_bouncingCounter != MAX_BOUNCING) {
+				if (x > stage.stageWidth || x < 0) {
+					++m_bouncingCounter;
+					movement.setDirection( -movement.dx, movement.dy);
+				}
+				if (y > stage.stageHeight || y < 0) {
+					++m_bouncingCounter;
+					movement.setDirection(movement.dx, -movement.dy);
+				}
+			}
 		}
 	}
 }

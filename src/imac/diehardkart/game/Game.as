@@ -1,12 +1,15 @@
 package imac.diehardkart.game {
-	import imac.diehardkart.bullet.StandardBullet;
-	import imac.diehardkart.weapon.StandardWeapon;
-	import imac.diehardkart.bullet.IBullet;
-	import flash.events.EventDispatcher;
-	import imac.diehardkart.utils.CustomEvent;
-	import flash.events.Event;
 	import flash.net.URLRequest;
 	import flash.net.URLLoader;
+	import flash.events.Event;
+	import imac.diehardkart.weapon.StandardWeapon;
+	import flash.events.EventDispatcher;
+	import imac.diehardkart.utils.CustomEvent;
+	import imac.diehardkart.bullet.BouncingBullet;
+	import imac.diehardkart.bullet.IBullet;
+	import imac.diehardkart.bullet.StandardBullet;
+	import imac.diehardkart.map.Map;
+	import imac.diehardkart.vehicle.BlindVehicle;
 	import flash.events.TimerEvent;
 	import imac.diehardkart.vehicle.IVehicle;
 	import flash.utils.Timer;
@@ -26,6 +29,8 @@ package imac.diehardkart.game {
 		}
 // -------------------------------------------------------------------------- //
 		
+		private var m_map : Map;
+
 		private var m_vehicles : Vector.<IVehicle>;
 		private var m_ennemiesBullets : Vector.<IBullet>;
 		private var m_playerBullets : Vector.<IBullet>;
@@ -39,6 +44,8 @@ package imac.diehardkart.game {
 		public function Game(stage:Stage) {
 			loadXMLData("../res/ship.xml", m_XML);
 
+			m_map = new Map(stage);
+			
 			m_genTimer = new Timer(1, 0);
 			m_genTimer.addEventListener(TimerEvent.TIMER, e_loop);
 
@@ -65,6 +72,7 @@ package imac.diehardkart.game {
 			for each(var vehicle : IVehicle in m_vehicles) {
 				vehicle.loop();
 			}
+
 			for each(var bullet : IBullet in m_playerBullets) {
 				bullet.loop();
 			}

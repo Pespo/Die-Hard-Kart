@@ -13,8 +13,8 @@ package
 		
 		public function Application() {
 			addChild(new Stats());
-			m_ready = 0;
 			m_game = new Game(stage);
+			m_ready = 0;
 			m_game.addEventListener(CustomEvent.LOADED, getReady);
 		}
 		

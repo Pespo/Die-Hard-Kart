@@ -1,8 +1,66 @@
 package imac.diehardkart.bullet {
-	import imac.diehardkart.utils.CustomEvent;
+	import flash.display.Stage;
+	import imac.diehardkart.game.Game;
+	import flash.display.MovieClip;
 	import imac.diehardkart.utils.Movement;
+	import imac.diehardkart.utils.CustomEvent;
 	import flash.events.Event;
+<<<<<<< Updated upstream
 	import imac.diehardkart.utils.FrameLabel;
+	import flash.utils.getDefinitionByName;
+	import assets.SkinBullet;
+	
+	public class StandardBullet implements IBullet {
+		
+		private var m_display : MovieClip;
+		private var m_movement : Movement;
+		private var m_damage : Number;
+		public static var GAME : Game;
+		public static var STAGE : Stage;
+		public static const STANDARD_SKIN : String = "SkinBullet";
+		
+		public function StandardBullet(movement:Movement, damage:Number = 1, skin:String = STANDARD_SKIN) {			
+			//var skinName : Class = getDefinitionByName(skin) as Class;
+			m_display = new SkinBullet();
+			m_movement = new Movement();
+			orientate();
+		}
+		
+		public function display() : void {
+			STAGE.addChild(m_display);
+		}
+		
+		public function get stage() : Stage {
+			return STAGE;
+		}
+		
+		public function get x() : Number {
+			return m_display.x;
+		}
+		
+		public function set x(x:Number) : void {
+			m_display.x = x;
+		}
+		
+		public function set y(y:Number) : void {
+			m_display.y = y;
+		}
+		
+		public function get y() : Number {
+			return m_display.y;
+		}
+		
+		public function get damage() : Number {
+			return m_damage;
+		}
+		
+		public function get movement() : Movement {
+			return m_movement;
+		}
+		
+		public function set movement(movement:Movement) : void {
+=======
+	import imac.diehardkart.utils.Labels;
 
 	/**
 	 * The common bullet in the bullet's Decorator Pattern
@@ -19,22 +77,63 @@ package imac.diehardkart.bullet {
 										damage:Number = STANDARD_DAMAGE,
 										waitingFrames:uint = 10) {
 						
+>>>>>>> Stashed changes
 			m_movement = movement;
-			m_waitingFrames = waitingFrames;
-			m_ctrFramesSinceLastMove = 0;
-			m_damage = damage;
-			m_skin = new SkinBullet();
-			m_dead = false;
-			addChild(m_skin);
-			
+		}
+		
+		public function set rotation(r:Number) : void {
+			m_display.rotation = r;
+		}
+		
+		public function get rotation() : Number {
+			return m_display.rotation;
+		}
+		
+		public function set width(w:Number) : void {
+			m_display.width = w;
+		}
+		
+		public function get width() : Number {
+			return m_display.width;
+		}
+		
+		public function set height(h:Number) : void {
+			m_display.height = h;
+		}
+		
+		public function get height() : Number {
+			return m_display.height;
+		}
+		
+		private function move() : void {
+			x = m_movement.make(x, Movement.AXIS_X);
+			y = m_movement.make(y, Movement.AXIS_Y);
+		}
+	
+		private function orientate() : void {
 			if (m_movement.dx >= 0) {
 				rotation = (180 * Math.asin(m_movement.dy) / Math.PI);
 			} else if (m_movement.dx <= 0 && m_movement.dy >= 0) {
 				rotation = - (180 * Math.asin(m_movement.dx) / Math.PI) + 90;
-			} else if (m_movement.dx <= 0 && m_movement.dy <= 0) {
+			} else if (m_movement.dx <= 0 && m_movement.dy <= 0) {
 				rotation = - (180 * Math.asin(m_movement.dy) / Math.PI) + 180;
 			}
+		}
+		
+		private function hitTest() : void {
 			
+<<<<<<< Updated upstream
+		}
+		
+		public function loop() : void {
+			move();
+			hitTest();
+			outTest();
+		}
+		
+		private function outTest() : void {
+			if (x < -width || y < -height || x > STAGE.stageWidth || y > STAGE.stageHeight) {
+=======
 			addEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);
 		}
@@ -74,19 +173,28 @@ package imac.diehardkart.bullet {
 					destruct();
 			}
 			
-			if (m_skin.currentFrameLabel == FrameLabel.EXPLOSION_DONE) {
+			if (m_skin.currentFrameLabel == Labels.EXPLOSION_DONE) {
+>>>>>>> Stashed changes
 				destruct();
 			}
 		}
 		
-		public override function get movement() : Movement {
-			return m_movement;
+		/*private function gotoAndPlay(s:String) : void {
+			
 		}
 		
-		public override function set movement(movement:Movement) : void {
-			m_movement = movement;
+		private function explode() : void {
+			gotoAndPlay(FrameLabel.EXPLOSION);
 		}
 		
+<<<<<<< Updated upstream
+		private function looseLife() : void {
+			
+		}*/
+		
+		private function destruct() : void {
+		
+=======
 		/**
 		 * Explode the bullet when it hits a vehicle
 		 * @return void
@@ -94,7 +202,7 @@ package imac.diehardkart.bullet {
 		public override function explode() : void {
 			m_dead = true;
 			GAME_REF.playerBullets.splice(GAME_REF.playerBullets.indexOf(this), 1);
-			m_skin.gotoAndPlay(FrameLabel.EXPLOSION);
+			m_skin.gotoAndPlay(Labels.EXPLOSION);
 		}
 
 		/**
@@ -106,6 +214,7 @@ package imac.diehardkart.bullet {
 			dispatchEvent(new CustomEvent(CustomEvent.DEAD));
 			removeEventListener(Event.ADDED_TO_STAGE, e_addedToStage);
 			removeEventListener(Event.REMOVED_FROM_STAGE, e_removedFromStage);
+>>>>>>> Stashed changes
 		}
 	}
 }

@@ -1,11 +1,11 @@
 package imac.diehardkart.vehicle {
+	import flash.display.Stage;
+	import imac.diehardkart.game.Game;
 	import imac.diehardkart.bullet.IBullet;
 	import imac.diehardkart.utils.Labels;
 	import imac.diehardkart.utils.CustomEvent;
 	import flash.events.EventDispatcher;
 	import imac.diehardkart.utils.Physics;
-	import flash.display.Stage;
-	import imac.diehardkart.game.Game;
 
 	public class StandardVehicle extends EventDispatcher implements IVehicle {
 		
@@ -20,7 +20,6 @@ package imac.diehardkart.vehicle {
 		public static const STANDARD_COEFF_LIFE : Number = 1;
 		public static const STANDARD_DAMAGE_EXPLOSION : Number = 10;
 		public static const STANDARD_RAY_EXPLOSION : Number = 20;
-		
 		
 		public function StandardVehicle(life:Number = STANDARD_LIFE,
 										coeffLoseLife:uint = STANDARD_COEFF_LIFE,
