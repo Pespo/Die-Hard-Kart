@@ -1,4 +1,5 @@
 package imac.diehardkart.game {
+	import imac.diehardkart.vehicle.ControlledVehicle;
 	import flash.net.URLRequest;
 	import flash.net.URLLoader;
 	import flash.events.Event;
@@ -7,11 +8,9 @@ package imac.diehardkart.game {
 	import imac.diehardkart.weapon.StandardWeapon;
 	import flash.events.EventDispatcher;
 	import imac.diehardkart.utils.CustomEvent;
-	import imac.diehardkart.bullet.BouncingBullet;
 	import imac.diehardkart.bullet.IBullet;
 	import imac.diehardkart.bullet.StandardBullet;
 	import imac.diehardkart.map.Map;
-	import imac.diehardkart.vehicle.BlindVehicle;
 	import flash.events.TimerEvent;
 	import imac.diehardkart.vehicle.IVehicle;
 	import flash.utils.Timer;
@@ -41,11 +40,23 @@ package imac.diehardkart.game {
 			var st : ArmedVehicle = new ArmedVehicle(new StandardVehicle(), weapons);
 			st.physics.x = 100;
 			st.physics.y = 100;
-			st.addEventListener(CustomEvent.DEAD, e_deadvehicle);
+			st.addEventListener(CustomEvent.DEAD, e_deadVehicle);
 			m_vehicles.push(st);
 			st.display();
 			
+			var vehicle1 : ControlledVehicle = new ControlledVehicle(new StandardVehicle());
+			vehicle1.physics.x = 100;
+			vehicle1.physics.y = 100;
+			vehicle1.addEventListener(CustomEvent.DEAD, e_deadVehicle);
+			m_vehicles.push(vehicle1);
+			vehicle1.display();
 			
+			/*var vehicle2 : BlindVehicle = new BlindVehicle(new StandardVehicle());
+			vehicle2.physics.x = 100;
+			vehicle2.physics.y = 100;
+			vehicle2.addEventListener(CustomEvent.DEAD, e_deadVehicle);
+			m_vehicles.push(vehicle2);
+			vehicle2.display();*/
 		}
 // -------------------------------------------------------------------------- //
 		
@@ -102,7 +113,7 @@ package imac.diehardkart.game {
 			for each(var pbullet : IBullet in m_playerBullets) {
 				pbullet.loop();
 			}
-			
+
 			for each(var ebullet : IBullet in m_ennemiesBullets) {
 				ebullet.loop();
 			}
@@ -113,11 +124,11 @@ package imac.diehardkart.game {
 			m_playerBullets.push(bullet);
 		}
 		
-		private function e_deadvehicle(evt:Event) : void {
+		private function e_deadVehicle(evt:Event) : void {
 			m_vehicles.splice(m_vehicles.indexOf(evt.target), 1);
 		}
 		
-		private function e_deadennemiesbullet(evt:Event) : void {
+		private function e_deadEnnemiesBullet(evt:Event) : void {
 			m_ennemiesBullets.splice(m_ennemiesBullets.indexOf(evt.target), 1);
 		}
 		

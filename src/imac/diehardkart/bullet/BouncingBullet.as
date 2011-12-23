@@ -7,7 +7,7 @@ package imac.diehardkart.bullet {
 	 */
 	public class BouncingBullet extends BulletDecorator {
 		
-		private const MAX_BOUNCING : uint = 3;
+		//private const MAX_BOUNCING : uint = 3;
 		private var m_bouncingCounter : uint;
 		
 		public function BouncingBullet(decoratedBullet : IBullet) {

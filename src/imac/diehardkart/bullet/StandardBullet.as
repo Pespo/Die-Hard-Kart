@@ -33,6 +33,24 @@ package imac.diehardkart.bullet {
 			deadTest();
 		}
 		
+		public function clone() : IBullet {
+			// create duplicate
+			var targetClass:Class = Object(this).constructor as Class;
+			var duplicate:IBullet = new targetClass(m_damage);
+			//duplicate properties
+			//duplicate.transform = this.transform;
+			// duplicate.filters = this.filters;
+			//duplicate.cacheAsBitmap = this.cacheAsBitmap;
+			//duplicate.opaqueBackground = this.opaqueBackground;
+			//if (this.scale9Grid) {
+			//var rect:Rectangle = this.scale9Grid;
+			//WAS Flash 9 bug where returned scale9Grid is 20x larger than assigned
+			//rect.x /= 20, rect.y /= 20, rect.width /= 20, rect.height /= 20;
+			//duplicate.scale9Grid = rect;
+			//}
+			return duplicate;
+		}
+		
 		private function deadTest() : void {
 			if (m_physics.currentFrameLabel == Labels.EXPLOSION_DONE) {
 				undisplay();
@@ -67,25 +85,5 @@ package imac.diehardkart.bullet {
 		public function set physics(m:Physics) : void {
 			m_physics = m;
 		}
-		
-		public function clone() : IBullet {
-			// create duplicate
-			var targetClass:Class = Object(this).constructor;
-			var duplicate:IBullet = new targetClass(m_damage);
-			//duplicate properties
-			//duplicate.transform = this.transform;
-		//	duplicate.filters = this.filters;
-			//duplicate.cacheAsBitmap = this.cacheAsBitmap;
-			//duplicate.opaqueBackground = this.opaqueBackground;
-			//if (this.scale9Grid) {
-				//var rect:Rectangle = this.scale9Grid;
-				//WAS Flash 9 bug where returned scale9Grid is 20x larger than assigned
-				//rect.x /= 20, rect.y /= 20, rect.width /= 20, rect.height /= 20;
-				//duplicate.scale9Grid = rect;
-			//}
-			return duplicate;
-
-		}
-		
 	}
 }

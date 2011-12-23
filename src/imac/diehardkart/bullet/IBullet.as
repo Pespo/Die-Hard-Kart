@@ -8,6 +8,5 @@ package imac.diehardkart.bullet {
 		function get physics() : Physics;
 		function set physics(s:Physics) : void;
 		function clone() : IBullet;
-
 	}
 }

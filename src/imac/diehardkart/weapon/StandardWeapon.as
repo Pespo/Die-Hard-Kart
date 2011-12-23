@@ -1,18 +1,8 @@
 package imac.diehardkart.weapon {
-	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
-	import flash.events.Event;
-	import flash.sampler.NewObjectSample;
-	import imac.diehardkart.bullet.IBullet;
-	import imac.diehardkart.bullet.StandardBullet;
-	import flash.geom.*;
 	import imac.diehardkart.bullet.IBullet;
 	import imac.diehardkart.game.Game;
 	import flash.display.Stage;
-	import flash.utils.getDefinitionByName;
 	import imac.diehardkart.utils.Physics;
-	import imac.diehardkart.utils.Labels;
-
 	
 	public class StandardWeapon implements IWeapon {
 		
@@ -125,4 +115,3 @@ package imac.diehardkart.weapon {
 
 	}
 }
-	

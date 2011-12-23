@@ -1,6 +1,6 @@
 package imac.diehardkart.weapon {
-	import imac.diehardkart.utils.Movement;
-	import flash.events.Event;
+	import imac.diehardkart.bullet.IBullet;
+	import imac.diehardkart.utils.Physics;
 	import flash.display.MovieClip;
 	import imac.diehardkart.weapon.IWeapon;
 	
@@ -19,33 +19,33 @@ package imac.diehardkart.weapon {
 			m_decoratedWeapon = decoratedVehicle;
 		}
 		
-		public function display() : void {
+		/*public function display() : void {
 			m_decoratedWeapon.display();
-		}
+		}*/
 		
-		function get physics() : Physics {
+		public function get physics() : Physics {
 			return m_decoratedWeapon.physics;
 		}
-		function set physics(s:Physics) : void {
+		public function set physics(s:Physics) : void {
 			m_decoratedWeapon.physics = s;
 		}
 		
-		function get physicsHolder() : Physics {
+		public function get physicsHolder() : Physics {
 			return m_decoratedWeapon.physics;
 		}
-		function set physicsHolder(s:Physics) : void {
+		public function set physicsHolder(s:Physics) : void {
 			m_decoratedWeapon.physics = s;
 		}
 		
-		function setBullet() : IBullet {
-			m_decoratedWeapon.setBullet();
+		public function setBullet() : IBullet {
+			return m_decoratedWeapon.setBullet();
 		}
 
 		public function shoot() : void {
 			m_decoratedWeapon.shoot();
 		}
 
-		function loop() : void {
+		public function loop() : void {
 			m_decoratedWeapon.loop();
 		}
 	}

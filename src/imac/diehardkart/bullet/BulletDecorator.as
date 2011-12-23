@@ -28,5 +28,9 @@ package imac.diehardkart.bullet {
 		public function set physics(s:Physics) : void {
 			m_decoratedBullet.physics = s;
 		}
+		
+		public function clone() : IBullet {
+			return m_decoratedBullet.clone();
+		}
 	}
 }

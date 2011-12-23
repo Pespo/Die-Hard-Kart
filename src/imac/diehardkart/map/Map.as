@@ -1,9 +1,7 @@
 package imac.diehardkart.map {
-	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.Stage;
-	import flash.events.Event;
-	import flash.net.URLRequest;
+
 	import maps.TestMap.Sand;
 	import maps.TestMap.Road;
 	

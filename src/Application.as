@@ -1,5 +1,4 @@
-package 
-{
+package {
 	import imac.diehardkart.utils.CustomEvent;
 	import flash.events.Event;
 	import net.hires.debug.Stats;
@@ -11,7 +10,7 @@ package
 		private var m_game : Game;
 		private var m_ready : int;
 		
-		public function Application() {
+		public function Application() {		
 			addChild(new Stats());
 			m_game = new Game(stage);
 			m_ready = 0;
@@ -23,9 +22,22 @@ package
 				run();
 		}
 		
-		
 		private function run() : void {
 			m_game.run();
 		}
 	}
 }
+/*
+package
+{
+	import flash.utils.getDefinitionByName;
+	import flash.events.KeyboardEvent;
+	import flash.display.Sprite;
+	public class Application extends Sprite {
+		public function Application() {		
+			var Skin : Class = getDefinitionByName("SkinVehicle") as Class;
+			var v:Object = new Skin();		
+
+		}
+	}
+}*/
