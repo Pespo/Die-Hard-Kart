@@ -2,6 +2,8 @@ package imac.diehardkart.game {
 	import flash.net.URLRequest;
 	import flash.net.URLLoader;
 	import flash.events.Event;
+	import imac.diehardkart.vehicle.ArmedVehicle;
+	import imac.diehardkart.weapon.IWeapon;
 	import imac.diehardkart.weapon.StandardWeapon;
 	import flash.events.EventDispatcher;
 	import imac.diehardkart.utils.CustomEvent;
@@ -20,18 +22,37 @@ package imac.diehardkart.game {
 		
 // -------------------------- ICI ON FAIT LES TESTS -------------------------- //
 		private function test() : void {
-			var st : StandardVehicle = new StandardVehicle();
+			var weapon1 : StandardWeapon = new StandardWeapon(new StandardBullet());
+			weapon1.physics.rotate(-160);
+			weapon1.physics.x = -10;
+			weapon1.physics.y = -20;	
+			
+			var weapon2 : StandardWeapon = new StandardWeapon(new StandardBullet());
+			weapon2.physics.rotate(10);
+			weapon2.physics.x = -10;
+			weapon2.physics.y = 10;	
+			
+			m_weapons.push(weapon1);
+			m_weapons.push(weapon2);
+			var weapons : Vector.<IWeapon> = new Vector.<IWeapon>;
+			weapons.push(weapon1);
+			weapons.push(weapon2);
+
+			var st : ArmedVehicle = new ArmedVehicle(new StandardVehicle(), weapons);
 			st.physics.x = 100;
 			st.physics.y = 100;
 			st.addEventListener(CustomEvent.DEAD, e_deadvehicle);
 			m_vehicles.push(st);
 			st.display();
+			
+			
 		}
 // -------------------------------------------------------------------------- //
 		
 		private var m_map : Map;
 
 		private var m_vehicles : Vector.<IVehicle>;
+		private var m_weapons : Vector.<IWeapon>;
 		private var m_ennemiesBullets : Vector.<IBullet>;
 		private var m_playerBullets : Vector.<IBullet>;
 		
@@ -39,7 +60,7 @@ package imac.diehardkart.game {
 		
 		private var m_genTimer : Timer;
 		
-		public static const ELEMENT_TO_LOAD : Number = 3;
+		public static const ELEMENT_TO_LOAD : Number = 1;
 		
 		public function Game(stage:Stage) {
 			loadXMLData("../res/ship.xml", m_XML);
@@ -50,6 +71,7 @@ package imac.diehardkart.game {
 			m_genTimer.addEventListener(TimerEvent.TIMER, e_loop);
 
 			m_vehicles = new Vector.<IVehicle>();
+			m_weapons = new Vector.<IWeapon>();
 			m_ennemiesBullets = new Vector.<IBullet>();
 			m_playerBullets = new Vector.<IBullet>();
 
@@ -58,7 +80,7 @@ package imac.diehardkart.game {
 			StandardBullet.STAGE = stage;
 			StandardBullet.GAME = this;
 			StandardWeapon.STAGE = stage;
-			StandardWeapon.STAGE = this;			
+			StandardWeapon.GAME = this;			
 		}
 		
 		public function run() : void {
@@ -72,13 +94,23 @@ package imac.diehardkart.game {
 			for each(var vehicle : IVehicle in m_vehicles) {
 				vehicle.loop();
 			}
+			
+			for each(var weapon : IWeapon in m_weapons) {
+				weapon.loop();
+			}
 
-			for each(var bullet : IBullet in m_playerBullets) {
-				bullet.loop();
+			for each(var pbullet : IBullet in m_playerBullets) {
+				pbullet.loop();
 			}
-			for each(var bullet : IBullet in m_ennemiesBullets) {
-				bullet.loop();
+			
+			for each(var ebullet : IBullet in m_ennemiesBullets) {
+				ebullet.loop();
 			}
+		}
+		
+		public function addPlayerBullets(bullet:IBullet) : void {
+			StandardBullet(bullet).addEventListener(CustomEvent.DEAD, e_deadplayerbullet);
+			m_playerBullets.push(bullet);
 		}
 		
 		private function e_deadvehicle(evt:Event) : void {

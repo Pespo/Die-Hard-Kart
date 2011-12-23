@@ -1,6 +1,8 @@
 package imac.diehardkart.weapon {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.events.Event;
+	import flash.sampler.NewObjectSample;
 	import imac.diehardkart.bullet.IBullet;
 	import imac.diehardkart.bullet.StandardBullet;
 	import flash.geom.*;
@@ -30,6 +32,11 @@ package imac.diehardkart.weapon {
 		private var m_physics : Physics;
 		
 		/**
+		 * Save physic of holder
+		 */
+		private var m_physicsHolder : Physics;
+		
+		/**
 		 * Rate of shoot
 		 */
 		private var m_shootRate : Number;
@@ -46,7 +53,7 @@ package imac.diehardkart.weapon {
 		/**
 		 * Standard values
 		 */
-		public static const STANDARD_SHOOT_RATE : Number = 5;
+		public static const STANDARD_SHOOT_RATE : Number = 10;
 		public static const MAX_SHOOT_RATE : Number = 10;
 		public static const MIN_SHOOT_RATE : Number = 1;
 		public static const STANDARD_DIRECTION : Number = 0;
@@ -59,6 +66,7 @@ package imac.diehardkart.weapon {
 		 * @param shootRate <code>Number</code> default value is 5
 		 * @param angle <code>Number</code> default value is 0
 		 */
+		
 		public function StandardWeapon(bullet:IBullet, shootRate:Number = STANDARD_SHOOT_RATE, angle:Number = STANDARD_DIRECTION/*, skin:String = STANDARD_SKIN*/) {
 			//	var skinName : Class = getDefinitionByName(skin) as Class;
 			//	m_display =new skinName();		
@@ -66,12 +74,13 @@ package imac.diehardkart.weapon {
 			m_shootCounter = 0;
 			m_bullet = bullet;
 			m_physics = new Physics("", angle, 0);
+			m_physicsHolder = new Physics("");
 		}
 		
-		public function display() : void {
+		/*public function display() : void {
 			m_physics.gotoAndPlay(Labels.INIT);
 			STAGE.addChild(m_physics);
-		}
+		}*/
 		
 		public function get physics() : Physics {
 			return m_physics;
@@ -80,15 +89,22 @@ package imac.diehardkart.weapon {
 		public function set physics(m:Physics) : void {
 			m_physics = m;
 		}
+		
+		public function get physicsHolder() : Physics {
+			return m_physicsHolder;
+		}
+		
+		public function set physicsHolder(m:Physics) : void {
+			m_physicsHolder = m;
+		}
 
 		public function setBullet() : IBullet {
-			/*var bulletStartPosition : MovieClip = new MovieClip();
-			bulletStartPosition.localToGlobal(new Point(physics.x, physics.y));*/
 			var launchBullet : IBullet = m_bullet.clone();
-			launchBullet.physics.x = /*bulletStartPosition.*/physics.x;
-			launchBullet.physics.y = /*bulletStartPosition.*/physics.y;
-			launchBullet.physics.rotate(physics.rotation);
-			launchBullet.physics.speed = 5;
+			trace(physics.x);
+			launchBullet.physics.x = physicsHolder.x + physics.x;
+			launchBullet.physics.y =  physicsHolder.y + physics.y;
+			launchBullet.physics.rotate(physicsHolder.rotation + physics.rotation);
+			launchBullet.physics.speed = 10;
 			return launchBullet;
 		}
 		

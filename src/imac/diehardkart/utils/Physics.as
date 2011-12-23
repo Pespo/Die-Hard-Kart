@@ -21,10 +21,10 @@ package imac.diehardkart.utils {
 		
 		public function Physics(skinName:String,
 							angle:Number = STANDARD_ANGLE,
-							 speed:Number = STANDARD_SPEED) {
+							speed:Number = STANDARD_SPEED) {
 			
-			var SkinClass : Class = getDefinitionByName(skinName) as Class;
-			m_anim = new SkinVehicle();
+			//var SkinClass : Class = getDefinitionByName(skinName) as Class;
+			m_anim = new SkinWeapon();
 			this.addChild(m_anim);
 			this.setRotation(angle);
 			this.speed = speed;
@@ -82,6 +82,14 @@ package imac.diehardkart.utils {
 		
 		public function get currentFrameLabel() : String {
 			return m_anim.currentFrameLabel;
+		}
+		
+		public function get anim():MovieClip {
+			return m_anim;
+		}
+		
+		public function set anim(value:MovieClip):void {
+			m_anim = value;
 		}
 	}
 }

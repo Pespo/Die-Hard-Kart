@@ -29,6 +29,14 @@ package imac.diehardkart.weapon {
 		function set physics(s:Physics) : void {
 			m_decoratedWeapon.physics = s;
 		}
+		
+		function get physicsHolder() : Physics {
+			return m_decoratedWeapon.physics;
+		}
+		function set physicsHolder(s:Physics) : void {
+			m_decoratedWeapon.physics = s;
+		}
+		
 		function setBullet() : IBullet {
 			m_decoratedWeapon.setBullet();
 		}

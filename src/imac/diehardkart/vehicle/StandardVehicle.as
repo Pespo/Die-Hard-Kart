@@ -39,7 +39,6 @@ package imac.diehardkart.vehicle {
 		}
 		
 		public function loop() : void {
-			trace(Math.random());
 			m_physics.move();
 			hitTest();
 			outTest();
@@ -65,7 +64,7 @@ package imac.diehardkart.vehicle {
 		
 		private function hitTest() : void {
 			for each(var bullet : IBullet in GAME.ennemiesBullets) {
-				if (m_physics.hitTestObject(bullet)) {
+				if (m_physics.hitTestObject(bullet.physics)) {
 					bullet.explode();
 					/* this is is good -> *///looseLife(bullet.damage);
 					/*       for testing -> */looseLife(1);

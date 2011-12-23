@@ -1,7 +1,8 @@
 package imac.diehardkart.vehicle {
+	import flash.events.EventDispatcher;
 	import imac.diehardkart.utils.Physics;
 
-	public class VehicleDecorator implements IVehicle {
+	public class VehicleDecorator extends EventDispatcher implements IVehicle {
 		
 		protected var m_decoratedVehicle : IVehicle;
 		
