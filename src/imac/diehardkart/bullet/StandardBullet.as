@@ -61,6 +61,7 @@ package imac.diehardkart.bullet {
 		
 		public function get physics() : Physics {
 			return m_physics;
+
 		}
 		
 		public function set physics(m:Physics) : void {
@@ -83,6 +84,8 @@ package imac.diehardkart.bullet {
 				//duplicate.scale9Grid = rect;
 			//}
 			return duplicate;
+
 		}
+		
 	}
 }

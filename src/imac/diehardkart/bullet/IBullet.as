@@ -1,5 +1,4 @@
 package imac.diehardkart.bullet {
-	import flash.display.Stage;
 	import imac.diehardkart.utils.Physics;
 
 	public interface IBullet {
@@ -9,5 +8,6 @@ package imac.diehardkart.bullet {
 		function get physics() : Physics;
 		function set physics(s:Physics) : void;
 		function clone() : IBullet;
+
 	}
 }

@@ -1,7 +1,6 @@
 package imac.diehardkart.bullet {
 	import imac.diehardkart.bullet.IBullet;
 	import imac.diehardkart.bullet.BulletDecorator;
-	import imac.diehardkart.utils.Movement;
 	
 	/**
 	 * @author kimo
@@ -22,16 +21,7 @@ package imac.diehardkart.bullet {
 		}
 		
 		private function bounce() : void {
-			if (m_bouncingCounter != MAX_BOUNCING) {
-				if (x > stage.stageWidth || x < 0) {
-					++m_bouncingCounter;
-					movement.setDirection( -movement.dx, movement.dy);
-				}
-				if (y > stage.stageHeight || y < 0) {
-					++m_bouncingCounter;
-					movement.setDirection(movement.dx, -movement.dy);
-				}
-			}
+			
 		}
 	}
 }
