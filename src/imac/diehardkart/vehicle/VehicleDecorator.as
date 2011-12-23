@@ -1,4 +1,5 @@
 package imac.diehardkart.vehicle {
+	import imac.diehardkart.utils.Physics;
 
 	public class VehicleDecorator implements IVehicle {
 		
@@ -12,24 +13,17 @@ package imac.diehardkart.vehicle {
 			m_decoratedVehicle.loop();
 		}
 		
-		public function set x(x:Number) : void {
-			m_decoratedVehicle.x = x;
+		public function get physics() : Physics {
+			return m_decoratedVehicle.physics;
 		}
 		
-		public function set y(y:Number) : void {
-			m_decoratedVehicle.y = y;
+		public function set physics(s:Physics) : void {
+			m_decoratedVehicle.physics = s;
 		}
 		
 		public function display() : void {
 			m_decoratedVehicle.display();
 		}
 		
-		public function set rotation(r:Number) : void {
-			m_decoratedVehicle.rotation = r;
-		}
-		
-		public function get rotation() : Number {
-			return m_decoratedVehicle.rotation;
-		}
 	}
 }

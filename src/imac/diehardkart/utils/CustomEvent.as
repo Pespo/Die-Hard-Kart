@@ -6,6 +6,7 @@ package imac.diehardkart.utils {
 		public static const OUT_OF_STAGE : String = "out of stage"; //Evt when out of stage (out of bounds or dead)
 		public static const EXPLOSION : String = "explosion"; //Evt when out of stage (out of bounds or dead)
 		public static const DEAD : String = "dead"; //Evt when out of stage (out of bounds or dead)
+		public static const LOADED : String = "loadé"; //Evt when out of stage (out of bounds or dead)
 		
 		/* \brief Construct a new CustomEvent
 		 * \params type a String describing the event

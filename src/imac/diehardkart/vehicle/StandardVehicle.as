@@ -1,113 +1,100 @@
 package imac.diehardkart.vehicle {
+	import imac.diehardkart.bullet.IBullet;
+	import imac.diehardkart.utils.Labels;
+	import imac.diehardkart.utils.CustomEvent;
+	import flash.events.EventDispatcher;
+	import imac.diehardkart.utils.Physics;
 	import flash.display.Stage;
 	import imac.diehardkart.game.Game;
-	import flash.display.MovieClip;
-	import imac.diehardkart.utils.Movement;
 
-	public class StandardVehicle implements IVehicle {
+	public class StandardVehicle extends EventDispatcher implements IVehicle {
 		
-		private var m_display : MovieClip;
-		private var m_movement : Movement;
-		public var m_data : XMLList;
+		private var m_physics : Physics;
+		private var m_life : Number;
+		private var m_damageExplosion : Number;
+		private var m_rayExplosion : Number;
+		private var m_coeffLoseLife : Number;
 		public static var GAME : Game;
 		public static var STAGE : Stage;
+		public static const STANDARD_LIFE : Number = 100;
+		public static const STANDARD_COEFF_LIFE : Number = 1;
+		public static const STANDARD_DAMAGE_EXPLOSION : Number = 10;
+		public static const STANDARD_RAY_EXPLOSION : Number = 20;
 		
-		public function StandardVehicle(xml:XMLList) {
-			m_data = xml;
-			m_display = new SkinVehicle();
-			m_movement = new Movement();
-			orientate();
+		
+		public function StandardVehicle(life:Number = STANDARD_LIFE,
+										coeffLoseLife:uint = STANDARD_COEFF_LIFE,
+										damage:Number = STANDARD_DAMAGE_EXPLOSION,
+										ray:Number = STANDARD_RAY_EXPLOSION) {
+			
+			m_life = life;
+			m_damageExplosion = damage;
+			m_coeffLoseLife = coeffLoseLife;
+			m_rayExplosion = ray; 
+			m_physics = new Physics("", Physics.STANDARD_ANGLE, 2);
 		}
 		
 		public function display() : void {
-			STAGE.addChild(m_display);
-		}
-		
-		public function set x(x:Number) : void {
-			m_display.x = x;
-		}
-		
-		public function set y(y:Number) : void {
-			m_display.y = y;
-		}
-		
-		public function get x() : Number {
-			return m_display.x;
-		}
-		
-		public function get y() : Number {
-			return m_display.y;
-		}
-		
-		public function set rotation(r:Number) : void {
-			m_display.rotation = r;
-		}
-		
-		public function get rotation() : Number {
-			return m_display.rotation;
-		}
-		
-		public function set width(w:Number) : void {
-			m_display.width = w;
-		}
-		
-		public function get width() : Number {
-			return m_display.width;
-		}
-		
-		public function set height(h:Number) : void {
-			m_display.height = h;
-		}
-		
-		public function get height() : Number {
-			return m_display.height;
-		}
-		
-		private function move() : void {
-			x = m_movement.make(x, Movement.AXIS_X);
-			y = m_movement.make(y, Movement.AXIS_Y);
-		}
-	
-		private function orientate() : void {
-			if (m_movement.dx >= 0) {
-				rotation = (180 * Math.asin(m_movement.dy) / Math.PI);
-			} else if (m_movement.dx <= 0 && m_movement.dy >= 0) {
-				rotation = - (180 * Math.asin(m_movement.dx) / Math.PI) + 90;
-			} else if (m_movement.dx <= 0 && m_movement.dy <= 0) {
-				rotation = - (180 * Math.asin(m_movement.dy) / Math.PI) + 180;
-			}
-		}
-		
-		private function hitTest() : void {
-			
+			m_physics.gotoAndPlay(Labels.INIT);
+			STAGE.addChild(m_physics);
 		}
 		
 		public function loop() : void {
-			move();
+			trace(Math.random());
+			m_physics.move();
 			hitTest();
 			outTest();
+			deadTest();
 		}
 		
-		private function outTest() : void {
-			if (x < -width || y < -height || x > STAGE.stageWidth || y > STAGE.stageHeight) {
-				destruct();
+		private function deadTest() : void {
+			if (m_physics.currentFrameLabel == Labels.EXPLOSION_DONE) {
+				undisplay();
+			}
+		}
+			
+		private function explode() : void {
+			die();
+			m_physics.gotoAndPlay(Labels.EXPLOSION);
+		}
+		
+		private function looseLife(d:uint) : void {
+			m_life -= d * m_coeffLoseLife;
+			if (m_life <= 0)
+				explode();
+		}
+		
+		private function hitTest() : void {
+			for each(var bullet : IBullet in GAME.ennemiesBullets) {
+				if (m_physics.hitTestObject(bullet)) {
+					bullet.explode();
+					/* this is is good -> *///looseLife(bullet.damage);
+					/*       for testing -> */looseLife(1);
+				}
 			}
 		}
 		
-		/*private function gotoAndPlay(s:String) : void {
-			
+		public function outTest() : void {
+			if (m_physics.x < -m_physics.width / 2 || m_physics.y < -m_physics.height / 2 || m_physics.x > STAGE.stageWidth + m_physics.width / 2 || m_physics.y > STAGE.stageHeight + m_physics.height / 2) {
+				die();
+				undisplay();
+			}
 		}
 		
-		private function explode() : void {
-			gotoAndPlay(FrameLabel.EXPLOSION);
+		private function die() : void {
+			dispatchEvent(new CustomEvent(CustomEvent.DEAD));
 		}
 		
-		private function looseLife() : void {
-			
-		}*/
+		private function undisplay() : void {
+			STAGE.removeChild(m_physics);
+		}
 		
-		private function destruct() : void {
+		public function get physics() : Physics {
+			return m_physics;
+		}
 		
+		public function set physics(m:Physics) : void {
+			m_physics = m;
 		}
 	}
 }
