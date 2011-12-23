@@ -1,16 +1,16 @@
 package imac.diehardkart.weapon {
-	import imac.diehardkart.utils.Movement;
-	import flash.events.Event;
+	import imac.diehardkart.utils.Physics;
+	import imac.diehardkart.bullet.IBullet;
 	
 	/** 
 	 * Interface of the weapon's Decorator Pattern
-	 * @author muxisar
 	 */ 
 	public interface IWeapon {
-		function e_shoot(evt:Event) : void;
-		function e_addedToStage(evt:Event) : void;
-		function e_removedFromStage(evt:Event) : void;
-		function get movement() : Movement;
-		function set movement(movement:Movement) : void;
+		function display() : void;
+		function get physics() : Physics;
+		function set physics(m:Physics) : void;
+		 function setBullet() : IBullet;
+		function shoot() : void
+		function loop() : void ;
 	}
 }
