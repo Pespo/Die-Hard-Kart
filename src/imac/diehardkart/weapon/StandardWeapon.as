@@ -57,14 +57,12 @@ package imac.diehardkart.weapon {
 		 * @param angle <code>Number</code> default value is 0
 		 */
 		
-		public function StandardWeapon(bullet:IBullet, shootRate:Number = STANDARD_SHOOT_RATE, angle:Number = STANDARD_DIRECTION/*, skin:String = STANDARD_SKIN*/) {
-			//	var skinName : Class = getDefinitionByName(skin) as Class;
-			//	m_display =new skinName();		
+		public function StandardWeapon(bullet:IBullet, shootRate:Number = STANDARD_SHOOT_RATE, angle:Number = STANDARD_DIRECTION/*, skin:String = STANDARD_SKIN*/) {	
 			m_shootRate = (m_shootRate < MIN_SHOOT_RATE || m_shootRate > MAX_SHOOT_RATE) ? STANDARD_SHOOT_RATE : shootRate;
 			m_shootCounter = 0;
 			m_bullet = bullet;
-			m_physics = new Physics("", angle, 0);
-			m_physicsHolder = new Physics("");
+			m_physics = new Physics("assets.SkinWeapon", angle, 0);
+			m_physicsHolder = new Physics("assets.SkinWeapon");
 		}
 		
 		/*public function display() : void {

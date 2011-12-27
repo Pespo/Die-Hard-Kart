@@ -17,6 +17,10 @@ package imac.diehardkart.bullet {
 			m_decoratedBullet.loop();
 		}
 		
+		public function clone() : IBullet {
+			m_decoratedBullet.clone();
+		}
+		
 		public function display() : void {
 			m_decoratedBullet.display();
 		}

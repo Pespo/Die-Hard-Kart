@@ -30,7 +30,7 @@ package imac.diehardkart.vehicle {
 			m_damageExplosion = damage;
 			m_coeffLoseLife = coeffLoseLife;
 			m_rayExplosion = ray; 
-			m_physics = new Physics("", Physics.STANDARD_ANGLE, 2);
+			m_physics = new Physics("assets.SkinVehicle", Physics.STANDARD_ANGLE, 2);
 		}
 		
 		public function display() : void {

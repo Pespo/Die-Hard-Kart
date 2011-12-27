@@ -1,4 +1,7 @@
 package imac.diehardkart.utils {
+	import assets.SkinVehicle;
+	import assets.SkinWeapon;
+	import assets.SkinBullet;
 	import flash.utils.getDefinitionByName;
 	import flash.display.Sprite;
 	import flash.display.MovieClip;
@@ -22,10 +25,13 @@ package imac.diehardkart.utils {
 		public function Physics(skinName:String,
 							angle:Number = STANDARD_ANGLE,
 							speed:Number = STANDARD_SPEED) {
+								
+			var implementSkinBullet : SkinBullet = new SkinBullet();
+			var implementSkinWeapon : SkinWeapon  = new SkinWeapon();
+			var implementSkinVehicle : SkinVehicle = new SkinVehicle();
 			
-			//var SkinClass : Class = getDefinitionByName(skinName) as Class;
-			//m_anim = new SkinWeapon();
-			m_anim = new SkinVehicle();
+			var SkinClass : Class = getDefinitionByName(skinName) as Class;
+			m_anim = new SkinClass();
 			this.addChild(m_anim);
 			this.setRotation(angle);
 			this.speed = speed;

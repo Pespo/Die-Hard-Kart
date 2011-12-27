@@ -19,7 +19,7 @@ package imac.diehardkart.bullet {
 			
 			
 			m_damage = damage;
-			m_physics = new Physics("", Physics.STANDARD_ANGLE, 2);
+			m_physics = new Physics("assets.SkinBullet", Physics.STANDARD_ANGLE, 2);
 		}
 		
 		public function display() : void {
