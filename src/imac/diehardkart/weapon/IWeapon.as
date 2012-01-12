@@ -10,8 +10,10 @@ package imac.diehardkart.weapon {
 		function get physics() : Physics;
 		function set physics(m:Physics) : void;
 		function get physicsHolder() : Physics;
-		function set physicsHolder(m:Physics) : void;		
-		function setBullet() : IBullet;
+		function set physicsHolder(m:Physics) : void;
+		function get bullet() : IBullet;
+		function set bullet(value:IBullet) : void;
+		function makeBullet() : IBullet;
 		function shoot() : void
 		function loop() : void ;
 	}

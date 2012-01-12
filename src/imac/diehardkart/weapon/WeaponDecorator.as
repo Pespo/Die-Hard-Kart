@@ -1,4 +1,5 @@
 package imac.diehardkart.weapon {
+	import flash.events.EventDispatcher;
 	import imac.diehardkart.bullet.IBullet;
 	import imac.diehardkart.utils.Physics;
 	import flash.display.MovieClip;
@@ -8,7 +9,7 @@ package imac.diehardkart.weapon {
 	 * Decorator parent for all the weapon's Decorator Pattern
 	 * @author muxisar
 	 */
-	public class WeaponDecorator extends MovieClip implements IWeapon {
+	public class WeaponDecorator extends EventDispatcher implements IWeapon {
 		private var m_decoratedWeapon : IWeapon;
 		
 		/**
@@ -22,7 +23,6 @@ package imac.diehardkart.weapon {
 		/*public function display() : void {
 			m_decoratedWeapon.display();
 		}*/
-		
 		public function get physics() : Physics {
 			return m_decoratedWeapon.physics;
 		}
@@ -37,8 +37,16 @@ package imac.diehardkart.weapon {
 			m_decoratedWeapon.physics = s;
 		}
 		
-		public function setBullet() : IBullet {
-			return m_decoratedWeapon.setBullet();
+		public function get bullet() : IBullet {
+			return m_decoratedWeapon.bullet;
+		}
+		
+		public function set bullet(value : IBullet) : void {
+			m_decoratedWeapon.bullet = value;
+		}
+		
+		public function makeBullet() : IBullet {
+			return m_decoratedWeapon.makeBullet();
 		}
 
 		public function shoot() : void {
