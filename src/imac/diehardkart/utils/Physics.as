@@ -1,7 +1,11 @@
 package imac.diehardkart.utils {
+	import assets.SkinVehicle;
+	import assets.SkinWeapon;
+	import assets.SkinBullet;
 	import flash.utils.getDefinitionByName;
 	import flash.display.Sprite;
 	import flash.display.MovieClip;
+	import imac.*;
 
 	/**
 	 * @author tom
@@ -12,20 +16,28 @@ package imac.diehardkart.utils {
 		private var m_dy : Number;
 		private var m_speed : Number;
 		private var m_anim : MovieClip;
+		public static const STANDARD_SKIN : String = "SkinBullet";
 		public static const STANDARD_SPEED : Number = 2;
-		public static const MAX_SPEED : Number = 5;
+		public static const MAX_SPEED : Number = 10;
 		public static const MIN_SPEED : Number = 0;
 		public static const STANDARD_ANGLE : Number = 0.5;
 		public static const STANDARD_DX : Number = 0.5;
 		public static const STANDARD_DY : Number = 0;
 		
-		public function Physics(skinName:String,
+		public function Physics(skinName:String = STANDARD_SKIN,
 							angle:Number = STANDARD_ANGLE,
 							speed:Number = STANDARD_SPEED) {
+<<<<<<< Updated upstream
+								
+=======
+							
+>>>>>>> Stashed changes
+			var implementSkinBullet : SkinBullet = new SkinBullet();
+			var implementSkinWeapon : SkinWeapon  = new SkinWeapon();
+			var implementSkinVehicle : SkinVehicle = new SkinVehicle();
 			
-			//var SkinClass : Class = getDefinitionByName(skinName) as Class;
-			//m_anim = new SkinWeapon();
-			m_anim = new SkinVehicle();
+			var SkinClass : Class = getDefinitionByName(skinName) as Class;
+			m_anim = new SkinClass();
 			this.addChild(m_anim);
 			this.setRotation(angle);
 			this.speed = speed;
@@ -98,6 +110,14 @@ package imac.diehardkart.utils {
 		
 		public function set anim(value:MovieClip):void {
 			m_anim = value;
+		}
+		
+		public function get dx() : Number {
+			return m_dx;
+		}
+		
+		public function get dy() : Number {
+			return m_dy;
 		}
 	}
 }
