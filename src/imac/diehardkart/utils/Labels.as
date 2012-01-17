@@ -1,7 +1,5 @@
 package imac.diehardkart.utils {
-	/**
-	 * @author tom
-	 */
+	
 	public class Labels {
 		public static const INIT : String = "initialisation";
 		public static const EXPLOSION : String = "explosion";
