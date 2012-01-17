@@ -1,4 +1,6 @@
 package imac.diehardkart {
+	import imac.diehardkart.map.Map;
+	import imac.diehardkart.decorable.vehicle.Kart;
 	import flash.events.KeyboardEvent;
 	import flash.events.EventDispatcher;
 	import flash.display.DisplayObject;
@@ -13,6 +15,9 @@ package imac.diehardkart {
 		
 	public class Game extends Sprite {
 		private var m_displayControllers : Vector.<IDecorator>;
+		private var m_kart : Kart;
+		private var m_viewKart : StandardVehicle;
+		private var m_map : Map;
 		
 		private function test() : void {
 			var stve : StandardVehicle = new StandardVehicle();
@@ -40,18 +45,29 @@ package imac.diehardkart {
 		}
 		
 		public function Game() {
-			Rndm.seed = Math.floor(Math.random() * 1000 - 10 + 1) + 1; 
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);		
-			addEventListener(KeyboardEvent.KEY_DOWN, downKeys);
-			addEventListener(KeyboardEvent.KEY_UP, upKeys);
+			Rndm.seed = Math.floor(Math.random() * 1000 - 10 + 1) + 1;
+			m_displayControllers = new Vector.<IDecorator>();
+			m_viewKart = new StandardVehicle("Kart");
+			m_map = new Map("../res/maps/mapTest.png");
+			m_kart = new Kart(m_viewKart);
+			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
-		private function downKeys(evt:KeyboardEvent) : void {
-			//Send to kart
-		}
-		
-		private function upKeys(evt:KeyboardEvent) : void {			
-			//Send to kart
+		private function catchUserEvent(evt : KeyboardEvent) : void {
+			switch(evt.keyCode) {
+				case 87 :
+					m_kart.setDirection(Kart.FORWARD);
+					break;
+				case 83 :
+					m_kart.setDirection(Kart.BACKWARD);
+					break;
+				case 65 :
+					m_kart.setDirection(Kart.LEFT);
+					break;
+				case 68 :
+					m_kart.setDirection(Kart.RIGHT);
+					break;
+			}
 		}
 		
 		private function survey(obj : EventDispatcher) : void {
@@ -67,8 +83,6 @@ package imac.diehardkart {
 		}
 		
 		private function destruct(obj : IDecorator) : void {
-			trace("destruct");
-			trace(m_displayControllers.length);
 			m_displayControllers.splice(m_displayControllers.indexOf(obj), 1);
 			obj.destructor();
 			obj = null;
@@ -109,9 +123,12 @@ package imac.diehardkart {
 		
 		private function onAddedToStage(evt : Event) : void {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			m_displayControllers = new Vector.<IDecorator>();
+			addChild(m_viewKart);
+			addChildAt(m_map.mapBitmap, 0);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, catchUserEvent);
+			stage.addEventListener(KeyboardEvent.KEY_UP, catchUserEvent);
 			addEventListener(Event.ENTER_FRAME, loop);
-				
+			
 			test();	
 		}
 		
@@ -123,6 +140,7 @@ package imac.diehardkart {
 					|| obj.y > stage.stageHeight + obj.height) {
 					destruct(obj);
 				}
+				m_kart.loop();
 			}
 		}
 	}

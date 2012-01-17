@@ -6,14 +6,14 @@ package imac.diehardkart.decorable.vehicle {
 		private var m_controls : Array;
 		public static const MAX_SPEED_ON_ROAD : Number = 5;
 		public static const MAX_SPEED_ON_SAND : Number = 2;
-		public static var MAX_SPEED : Number = PhysicalElement.MAX_SPEED;
+		public static var MAX_SPEED : Number = PhysicalElement.MAX_SPEED / 2;
 		public static const MIN_SPEED : Number = 0;
 		private static const ROTATION : int = 3;
 		
-		private static const FORWARD : Number = 0;
-		private static const BACKWARD : Number = 1;
-		private static const LEFT : Number = 2;
-		private static const RIGHT : Number = 3;
+		public static const FORWARD : Number = 0;
+		public static const BACKWARD : Number = 1;
+		public static const LEFT : Number = 2;
+		public static const RIGHT : Number = 3;
 		
 		public function Kart(decoratedVehicle : IVehicle) {
 			super(decoratedVehicle);
@@ -38,12 +38,8 @@ package imac.diehardkart.decorable.vehicle {
 			speed -= speed  - 0.1 >= MIN_SPEED ? 0.1 : MIN_SPEED + speed;
 		}
 
-		public function setDirection(key : Number) : void {
-			m_controls[key] = true;
-		}
-		
-		public function unsetDirection(key : Number) : void {			
-			m_controls[key] = false;
+		public function setDirection(dir : Number) : void {
+			m_controls[dir] = !m_controls[dir];
 		}
 
 		private function updatePostion() : void {
