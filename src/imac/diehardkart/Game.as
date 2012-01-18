@@ -1,25 +1,29 @@
 package imac.diehardkart {
-	import flash.events.KeyboardEvent;
-	import flash.events.EventDispatcher;
-	import flash.display.DisplayObject;
 
+	import imac.diehardkart.decorable.vehicle.Kart;
+	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
+	import flash.events.EventDispatcher;
+	import flash.display.DisplayObject;	
 	import imac.diehardkart.decorable.Decorator;
 	import imac.diehardkart.decorable.IDecorator;
 	import imac.diehardkart.utils.CustomEvent;
 	import com.gskinner.utils.Rndm;
 	import imac.diehardkart.decorable.vehicle.BlindVehicle;
-	import imac.diehardkart.decorable.vehicle.ArmedVehicle;
 	import flash.events.Event;
 	import imac.diehardkart.decorable.vehicle.StandardVehicle;
+	import imac.diehardkart.decorable.vehicle.ArmedVehicle;
 	import imac.diehardkart.decorable.weapon.StandardWeapon;
-	import imac.diehardkart.decorable.bullet.StandardBullet;
-	import imac.diehardkart.decorable.vehicle.IVehicle;
+	import imac.diehardkart.decorable.weapon.OrientedWeapon;
 	import imac.diehardkart.decorable.weapon.IWeapon;
+	import imac.diehardkart.decorable.bullet.StandardBullet;
+
 	import flash.display.Sprite;
-	
 		
 	public class Game extends Sprite {
 		private var m_displayControllers : Vector.<IDecorator>;
+		private var m_player : Player;
+
 		
 		private function test() : void {
 			var stve : StandardVehicle = new StandardVehicle();
@@ -28,11 +32,16 @@ package imac.diehardkart {
 			var stve3 : StandardVehicle = new StandardVehicle();
 			var stve4 : StandardVehicle = new StandardVehicle();
 			var bve : BlindVehicle = new BlindVehicle(stve);
+
 			var b : StandardBullet = new StandardBullet();
 			var w : StandardWeapon = new StandardWeapon(b);
+			var ow : OrientedWeapon = new OrientedWeapon(w);
 			var ws : Vector.<IWeapon> = new Vector.<IWeapon>();
-			ws.push(w);
+			ws.push(ow);
 			var ave : ArmedVehicle = new ArmedVehicle(bve, ws);
+			
+	
+
 			position(stve);
 			addChild(stve);
 			position(stve1);
@@ -43,44 +52,70 @@ package imac.diehardkart {
 			addChild(stve3);	
 			position(stve4);
 			addChild(stve4);
-			survey(w);
-			survey(ave);
+			
+			//survey(w);
+			//survey(ave);
 			survey(stve1);
 			survey(stve2);
 			survey(stve3);
 			survey(stve4);
-			
 			//survey(bve);	
 		}
 		
 		public function Game() {
-			Rndm.seed = Math.floor(Math.random() * 1000 - 10 + 1) + 1; 
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);		
-			addEventListener(KeyboardEvent.KEY_DOWN, downKeys);
-			addEventListener(KeyboardEvent.KEY_UP, upKeys);
+			Rndm.seed = Math.floor(Math.random() * 1000 - 10 + 1) + 1;
+			m_displayControllers = new Vector.<IDecorator>();
+			
+			var qgqge : StandardWeapon = new StandardWeapon(new StandardBullet());
+			
+			var weapon : OrientedWeapon = new OrientedWeapon(qgqge);
+			var weapons : Vector.<IWeapon> = new Vector.<IWeapon>();
+			weapons.push(weapon);
+			var qsg : StandardVehicle = new StandardVehicle();
+			survey(qsg);
+			addChild(qsg);
+			
+			survey(qgqge);
+			addChild(qgqge);
+			var ac : ArmedVehicle = new ArmedVehicle(qsg, weapons);
+			m_player = new Player(weapon, new StandardVehicle(), ac);
+			
+			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
-		private function downKeys(evt:KeyboardEvent) : void {
-			//Send to kart
+		private function catchUserEvent(evt : KeyboardEvent) : void {
+			switch(evt.keyCode) {
+				//case 87 :
+				case 90 :
+					m_player.kart.setDirection(Kart.FORWARD);
+					break;
+				//case 83 :
+				case 80 :					
+					m_player.kart.setDirection(Kart.BACKWARD);
+					break;
+				//case 65 :
+				case 81 :
+					m_player.kart.setDirection(Kart.LEFT);
+					break;
+				case 68 :
+					m_player.kart.setDirection(Kart.RIGHT);
+					break;
+			}
 		}
 		
-		private function upKeys(evt:KeyboardEvent) : void {			
-			//Send to kart
-		}
-		
-		//Duplicate this function in many function
+		//Make one survey by listener
 		private function survey(obj : EventDispatcher) : void {
-			obj.addEventListener(CustomEvent.SHOOT, addBullet);
 			obj.addEventListener(CustomEvent.DEAD, deadObject);
+			obj.addEventListener(CustomEvent.SHOOT, addBullet);
 			m_displayControllers.push(obj);
 		}
-		
+
 		private function  addBullet(evt : CustomEvent):void {
-			trace("Target : " + evt.target.bullet);
+			trace("Add Bullet");
 			addChild(evt.target.bullet);
 			survey(evt.target.bullet);
 		}
-		
+
 		private function deadObject(evt : Event) : void {
 			var obj : Decorator = evt.target as Decorator;
 			obj.removeEventListener(CustomEvent.DEAD, deadObject);
@@ -90,7 +125,6 @@ package imac.diehardkart {
 		
 		private function destruct(obj : IDecorator) : void {
 			trace("destruct");
-			trace(m_displayControllers.length);
 			m_displayControllers.splice(m_displayControllers.indexOf(obj), 1);
 			obj.destructor();
 			obj = null;
@@ -131,10 +165,31 @@ package imac.diehardkart {
 		
 		private function onAddedToStage(evt : Event) : void {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			m_displayControllers = new Vector.<IDecorator>();
+			//addChild(m_player.viewKart);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, catchUserEvent);
+			stage.addEventListener(KeyboardEvent.KEY_UP, catchUserEvent);
 			addEventListener(Event.ENTER_FRAME, loop);
-				
-			test();	
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, catchMouseEvent);
+			stage.addEventListener(MouseEvent.MOUSE_DOWN, catchMouseEvent);
+			stage.addEventListener(MouseEvent.MOUSE_UP, catchMouseEvent);
+			
+			//test();	
+		}
+		
+		private function catchMouseEvent(evt : MouseEvent) : void {
+			switch(evt.type) {
+				case MouseEvent.MOUSE_MOVE :
+					m_player.weapon.aim(stage.mouseX, stage.mouseY);
+					break;
+				case MouseEvent.MOUSE_DOWN :
+					m_player.weapon.addEventListener(CustomEvent.SHOOT, addBullet);
+					m_displayControllers.push(m_player.weapon);				
+					break;
+				case MouseEvent.MOUSE_UP :
+					m_displayControllers.splice(m_displayControllers.indexOf(m_player.weapon), 1);
+					m_player.weapon.removeEventListener(CustomEvent.SHOOT, addBullet);
+					break;
+			}
 		}
 		
 		private function loop(evt : Event) : void {
@@ -145,6 +200,7 @@ package imac.diehardkart {
 					|| obj.y > stage.stageHeight + obj.height) {
 					destruct(obj);
 				}
+				m_player.kart.loop();
 			}
 		}
 	}

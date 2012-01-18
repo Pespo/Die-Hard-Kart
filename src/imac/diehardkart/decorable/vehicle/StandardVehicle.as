@@ -5,6 +5,7 @@ package imac.diehardkart.decorable.vehicle {
 	import flash.display.MovieClip;
 	import imac.diehardkart.decorable.PhysicalElement;
 	import assets.skins.StandardVehicleSkin;
+
 	
 	public class StandardVehicle extends PhysicalElement implements IVehicle {
 		private var m_life : Number;
@@ -13,8 +14,9 @@ package imac.diehardkart.decorable.vehicle {
 		private var m_coeffLoseLife : Number;
 		private var m_view : MovieClip;
 		private var m_explode : Boolean = false;
-		
+	
 		private var implementSkinVehicle : StandardVehicleSkin = new StandardVehicleSkin();		
+
 		protected static const STANDARD_SKIN : String = "StandardVehicleSkin";
 		public static const STANDARD_LIFE : Number = 100;
 		public static const STANDARD_COEFF_LIFE : Number = 1;
@@ -41,6 +43,7 @@ package imac.diehardkart.decorable.vehicle {
 		}
 		
 		public function loop() : void {
+			//trace("ahhhhhhhhhhhhh " + rotation); 
 			if (!m_explode)
 				move();
 			else

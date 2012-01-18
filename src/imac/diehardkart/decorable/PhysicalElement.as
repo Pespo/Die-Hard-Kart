@@ -29,8 +29,10 @@ package imac.diehardkart.decorable {
 		 * Relative rotation from the current angle
 		 */
 		public function rotate(angle : Number) : void {
+			trace(this);
 			rotation += angle;
 			setRotation(rotation);
+			trace("rotate : " + rotation);
 		}
 
 		public function orientate(dx : Number, dy : Number) : void {
@@ -43,14 +45,19 @@ package imac.diehardkart.decorable {
 		 * Absolute rotation from the zero angle
 		 */
 		public function setRotation(angle : Number) : void {
+			trace(this);
 			rotation = angle;
 			m_dx = Math.cos(Math.PI * angle / 180);
 			m_dy = Math.sin(Math.PI * angle / 180);
+			trace("setRotation : " + rotation);
+
 		}
 
 		public function setOrientation(dx : Number, dy : Number) : void {
+			trace(this);
 			setNormalized(dx, dy);
 			rotation = 180 * Math.acos(m_dx) / Math.PI * (m_dy >= 0 ? 1 : -1);
+			trace("setOrientation : " + rotation);
 		}
 
 		/**
@@ -79,7 +86,7 @@ package imac.diehardkart.decorable {
 		}
 		
 		public function destructor() : void {
-			trace("Destruct PhysicalElement");
+			//trace("Destruct PhysicalElement");
 		}
 	}
 }

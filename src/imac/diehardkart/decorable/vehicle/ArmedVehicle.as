@@ -1,6 +1,7 @@
 package imac.diehardkart.decorable.vehicle {
 	import imac.diehardkart.decorable.Decorator;
 	import imac.diehardkart.decorable.weapon.IWeapon;
+	import flash.display.DisplayObject;
 
 	public class ArmedVehicle extends VehicleDecorator {
 		
@@ -10,14 +11,29 @@ package imac.diehardkart.decorable.vehicle {
 			super(decoratedVehicle);
 			m_weapons = weapons;
 			for each (var weapon : IWeapon in m_weapons) {
-				addChild(weapon.view);
+				position(weapon);
 			}
 		}
 
-		public override function loop() : void {
-			super.loop();
+		private function position(weapon : IWeapon) : void {
+			weapon.x = x;
+			weapon.y = y;
 		}
 		
+		public override function loop() : void {
+			super.loop();
+			for each (var weapon : IWeapon in m_weapons) {
+				position(weapon);
+			}
+		}
+		
+		override public function setOrientation(dx : Number, dy : Number) : void {
+			super.setOrientation(dx, dy);
+			for each (var weapon : IWeapon in m_weapons) {
+				trace("");
+				weapon.setOrientation(dx, dy);
+			}
+		}
 	}
 }
 

@@ -3,8 +3,8 @@ package imac.diehardkart.decorable.weapon {
 	
 	public class WeaponDecorator extends Decorator implements IWeapon {
 		
-		public function WeaponDecorator(decoratedVehicle : IWeapon) {
-			super(decoratedVehicle);
+		public function WeaponDecorator(decoratedWeapon: IWeapon) {
+			super(decoratedWeapon);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 package imac.diehardkart.decorable {
+
 	import flash.display.DisplayObject;
 	import flash.events.EventDispatcher;
 	import flash.display.MovieClip;
@@ -60,10 +61,12 @@ package imac.diehardkart.decorable {
 		}
 		
 		public function get height() : Number {
+
 			return m_decorated.height;
 		}
 		
 		public function get width() : Number {
+
 			return m_decorated.width;
 		}
 		
@@ -78,8 +81,17 @@ package imac.diehardkart.decorable {
 		}
 		
 		public function addChild(child : DisplayObject) : DisplayObject {
-			trace(this + " addchild : " + child);  
 			return m_decorated.addChild(child);		
 		}
+
+		
+		override public function addEventListener(type  : String, listener : Function, useCapture : Boolean = false, priority : int = 0, useWeakReference : Boolean = false) : void {
+			m_decorated.addEventListener(type, listener, useCapture, priority, useWeakReference);
+		}
+		
+		override public function removeEventListener(type  : String, listener : Function, useCapture : Boolean = false) : void {
+			m_decorated.removeEventListener(type, listener, useCapture);
+		}
+		
 	}
 }

@@ -4,6 +4,7 @@ package imac.diehardkart.decorable.bullet {
 	import imac.diehardkart.decorable.PhysicalElement;
 	import imac.diehardkart.utils.Labels;
 	import imac.diehardkart.utils.CustomEvent;
+
 	import assets.skins.StandardBulletSkin;
 	
 	public class StandardBullet extends PhysicalElement implements IBullet {
@@ -12,14 +13,17 @@ package imac.diehardkart.decorable.bullet {
 		private var m_damage : Number;
 		private var m_view : MovieClip;
 		private var m_skin : String;
+
 		private var m_explode : Boolean = false;
 		public static const STANDARD_DAMAGE : Number = 10;
 		public static const STANDARD_SKIN : String = "StandardBulletSkin";
 		
 		public function StandardBullet(skin : String = STANDARD_SKIN, damage:Number = STANDARD_DAMAGE) {
 			super();
+
 			m_skin = skin;
 			var SkinClass : Class = getDefinitionByName("assets.skins." + skin) as Class;
+
 			m_view = new SkinClass();
 			m_view.gotoAndPlay(Labels.INIT);
 			this.addChild(m_view);
@@ -37,7 +41,9 @@ package imac.diehardkart.decorable.bullet {
 		public function clone() : IBullet {
 			// create duplicate
 			var targetClass:Class = Object(this).constructor as Class;
+
 			var duplicate:IBullet = new targetClass(m_skin, m_damage);
+
 			//duplicate properties
 			//duplicate.transform = this.transform;
 			// duplicate.filters = this.filters;
