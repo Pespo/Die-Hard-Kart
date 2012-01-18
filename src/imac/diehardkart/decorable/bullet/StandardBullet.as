@@ -74,7 +74,7 @@ package imac.diehardkart.decorable.bullet {
 		}
 		
 		override public function destructor() : void {
-			trace("Destruct StandardBullet");
+			//trace("Destruct StandardBullet");
 			super.destructor();
 			removeChild(m_view);
 			m_view.stop();

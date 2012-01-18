@@ -72,7 +72,7 @@ package imac.diehardkart.decorable.weapon {
 		}
 		
 		override public function destructor() : void {
-			trace("Destruct StandardWeapon");
+			//trace("Destruct StandardWeapon");
 			super.destructor();
 			removeChild(m_view);
 			m_view.stop();

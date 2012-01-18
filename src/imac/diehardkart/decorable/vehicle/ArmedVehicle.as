@@ -37,7 +37,11 @@ package imac.diehardkart.decorable.vehicle {
 		}
 		
 		override public function destructor() : void {
+			//trace("Destruct ArmedVehicle");
 			super.destructor();
+			for each (var weapon : IWeapon in m_weapons) {
+				weapon.destructor();
+			}
 		}
 	}
 }

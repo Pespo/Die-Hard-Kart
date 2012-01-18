@@ -80,7 +80,7 @@ package imac.diehardkart.decorable {
 		}
 		
 		public function destructor() : void {
-			trace("Destruct PhysicalElement");
+			//trace("Destruct PhysicalElement");
 		}
 	}
 }

@@ -18,7 +18,7 @@ package imac.diehardkart.decorable.vehicle {
 	
 		private var implementSkinVehicle : StandardVehicleSkin = new StandardVehicleSkin();		
 
-		protected static const STANDARD_SKIN : String = "StandardVehicleSkin";
+		public static const STANDARD_SKIN : String = "StandardVehicleSkin";
 		public static const STANDARD_LIFE : Number = 100;
 		public static const STANDARD_ARMOR : int = 1;
 		public static const MAX_ARMOR : int = 11;
@@ -51,7 +51,7 @@ package imac.diehardkart.decorable.vehicle {
 				deadTest();
 		}
 			
-		private function explode() : void {
+		public function explode() : void {
 			m_explode = true;
 			m_view.gotoAndPlay(Labels.EXPLOSION);
 		}
@@ -62,10 +62,10 @@ package imac.diehardkart.decorable.vehicle {
 			}
 		}
 		
-		override public function hitTestObject(obj : DisplayObject) : Boolean {
-			trace(super.hitTestObject(obj));
+		/*override public function hitTestObject(obj : DisplayObject) : Boolean {
+			//(super.hitTestObject(obj));
 			return super.hitTestObject(obj);
-		}
+		}*/
 		
 		public function looseLife(damage : Number) : Number {
 			m_life -= damage * (MAX_ARMOR - m_armor);// * m_armor;
@@ -91,7 +91,7 @@ package imac.diehardkart.decorable.vehicle {
 		}
 		
 		override public function destructor() : void {
-			trace("Destruct StandardVehicle");
+			//trace("Destruct StandardVehicle");
 			super.destructor();
 			removeChild(m_view);
 			m_view.stop();

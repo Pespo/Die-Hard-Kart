@@ -4,5 +4,6 @@ package imac.diehardkart.decorable.bullet {
 	public interface IBullet extends IDecorator {
 		function clone() : IBullet;
 		function get damage() : Number;
+		function explode() : void;
 	}
 }

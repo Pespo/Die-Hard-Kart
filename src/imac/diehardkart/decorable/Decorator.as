@@ -82,7 +82,7 @@ package imac.diehardkart.decorable {
 		}
 		
 		public function destructor() : void {
-			trace("Destruct Decorator " + this);
+			//trace("Destruct Decorator " + this);
 			m_decorated.destructor();
 			m_decorated = null;
 		}

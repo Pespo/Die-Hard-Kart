@@ -15,5 +15,10 @@ package imac.diehardkart.decorable.bullet {
 			var deco : IBullet = m_decorated as IBullet;
 			return deco.damage;
 		}
+		
+		public function explode() : void {
+			var deco : IBullet = m_decorated as IBullet;
+			deco.explode();
+		}
 	}
 }
