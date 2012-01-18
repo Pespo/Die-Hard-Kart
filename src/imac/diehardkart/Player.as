@@ -6,19 +6,19 @@ package imac.diehardkart {
 	import imac.diehardkart.decorable.vehicle.Kart;
 	
 	public class Player {
-		private var m_viewWeapon : StandardWeapon;
-		private var m_controlWeapon : OrientedWeapon;
-		private var m_viewVehicle : StandardVehicle;
-		private var m_controlVehicle : ArmedVehicle;
+		private var m_stdWeapon : StandardWeapon;
+		private var m_decoWeapon : OrientedWeapon;
+		private var m_stdVehicle : StandardVehicle;
+		private var m_decoVehicle : ArmedVehicle;
 		private var m_kart : Kart;
 		private var m_score : int;
 		
-		public function Player(controlW : OrientedWeapon, viewW : StandardWeapon, viewV : StandardVehicle, controlV : ArmedVehicle) {
-			m_controlWeapon = controlW;
-			m_viewWeapon = viewW;
-			m_viewVehicle = viewV;
-			m_controlVehicle = controlV;
-			m_kart = new Kart(m_controlVehicle);
+		public function Player(stdV : StandardVehicle, decoV : ArmedVehicle, stdW : StandardWeapon, decoW : OrientedWeapon) {
+			m_decoWeapon = decoW;
+			m_stdWeapon = stdW;
+			m_stdVehicle = stdV;
+			m_decoVehicle = decoV;
+			m_kart = new Kart(m_decoVehicle);
 			m_score = 0;
 		}
 		
@@ -38,36 +38,36 @@ package imac.diehardkart {
 			return m_kart;
 		}
 		
-		public function get weapon() : OrientedWeapon {
-			return m_controlWeapon;
+		public function get decoWeapon() : OrientedWeapon {
+			return m_decoWeapon;
 		}
 		
-		public function set weapon(value : OrientedWeapon) : void {
-			m_controlWeapon = value;
+		public function set decoWeapon(value : OrientedWeapon) : void {
+			m_decoWeapon = value;
 		}
 		
-		public function get vehicle() : ArmedVehicle {
-			return m_controlVehicle;
+		public function get decoVehicle() : ArmedVehicle {
+			return m_decoVehicle;
 		}
 		
-		public function set vehicle(value : ArmedVehicle) : void {
-			m_controlVehicle = value;
+		public function set decoVehicle(value : ArmedVehicle) : void {
+			m_decoVehicle = value;
 		}
 		
-		public function get viewVehicle() : StandardVehicle {
-			return m_viewVehicle;
+		public function get stdVehicle() : StandardVehicle {
+			return m_stdVehicle;
 		}
 		
-		public function set viewVehicle(value : StandardVehicle) : void {
-			m_viewVehicle = value;
+		public function set stdVehicle(value : StandardVehicle) : void {
+			m_stdVehicle = value;
 		}
 		
-		public function get viewWeapon() : StandardWeapon {
-			return m_viewWeapon;
+		public function get stdWeapon() : StandardWeapon {
+			return m_stdWeapon;
 		}
 		
-		public function set viewWeapon(value : StandardWeapon) : void {
-			m_viewWeapon = value;
+		public function set stdWeapon(value : StandardWeapon) : void {
+			m_stdWeapon = value;
 		}
 	}
 }

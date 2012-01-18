@@ -23,9 +23,7 @@ package imac.diehardkart.decorable.bullet {
 		
 		public function StandardBullet(skin : String = STANDARD_SKIN, damage : Number = STANDARD_DAMAGE, speedMovement : Number = STANDARD_SPEED) {
 			var test : Number = (speedMovement < STANDARD_SPEED_BULLET || speedMovement > MAX_SPEED_BULLET) ? STANDARD_SPEED_BULLET * COEFF_BULLET_SPEED : 5 / (MAX_SPEED_BULLET - STANDARD_SPEED_BULLET) * (speedMovement - STANDARD_SPEED_BULLET) + COEFF_BULLET_SPEED;
-			trace(" -- " + test)
 			super(PhysicalElement.STANDARD_ANGLE, test);
-			trace(" -- " + test)
 			m_skin = skin;
 			var SkinClass : Class = getDefinitionByName("assets.skins." + skin) as Class;
 			m_view = new SkinClass();
@@ -69,6 +67,18 @@ package imac.diehardkart.decorable.bullet {
 		
 		public function set view(v : MovieClip) : void {
 			m_view = v;
+		}
+		
+		public function get damage() : Number {
+			return m_damage;
+		}
+		
+		override public function destructor() : void {
+			trace("Destruct StandardBullet");
+			super.destructor();
+			removeChild(m_view);
+			m_view.stop();
+			m_view = null;
 		}
 	}
 }

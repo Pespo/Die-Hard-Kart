@@ -41,7 +41,6 @@ package imac.diehardkart.map {
 		}
 
         private function refMapLoaded(evt : Event) : void {
-			trace("Ref Map Loaded");
             m_refMapBitmap = Bitmap(evt.target.loader.content);
 			if (++m_loaded >= m_total) {
 				dispatchEvent(new Event(Event.COMPLETE));
@@ -49,7 +48,6 @@ package imac.diehardkart.map {
         }
 		
 		private function mapLoaded(evt : Event) : void {
-			trace("Map Loaded");
 			m_mapBitmap = Bitmap(evt.target.loader.content);
 			if (++m_loaded >= m_total) {
 				dispatchEvent(new Event(Event.COMPLETE));
@@ -107,7 +105,7 @@ package imac.diehardkart.map {
 			if (m_mapLaps == 0 || m_mapCheckpoints == 1) {
 				m_mapCheckpoints = 0;
 				++m_mapLaps;
-				trace(m_mapLaps);
+				//trace(m_mapLaps);
 			}
 		}
 		

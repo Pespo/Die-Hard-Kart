@@ -1,13 +1,16 @@
 package imac.diehardkart {
 
 	import flash.text.TextField;
+	import imac.diehardkart.decorable.PhysicalElement;
+	import imac.diehardkart.decorable.bullet.BulletDecorator;
+	import imac.diehardkart.decorable.vehicle.VehicleDecorator;
+	import imac.diehardkart.decorable.vehicle.IVehicle;
+	import imac.diehardkart.decorable.bullet.IBullet;
 	import imac.diehardkart.map.Map;
 	import imac.diehardkart.decorable.vehicle.Kart;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
-	import flash.events.EventDispatcher;
 	import flash.display.DisplayObject;	
-	import imac.diehardkart.decorable.Decorator;
 	import imac.diehardkart.decorable.IDecorator;
 	import imac.diehardkart.utils.CustomEvent;
 	import com.gskinner.utils.Rndm;
@@ -23,7 +26,9 @@ package imac.diehardkart {
 	import flash.display.Sprite;
 		
 	public class Game extends Sprite {
-		private var m_displayControllers : Vector.<IDecorator>;
+		private var m_displayBullets : Vector.<IBullet>;
+		private var m_displayVehicles : Vector.<IVehicle>;
+		private var m_displayWeapons : Vector.<IWeapon>;
 		private var m_player : Player;
 		private var m_map : Map;
 		private var m_score : TextField;
@@ -31,59 +36,47 @@ package imac.diehardkart {
 
 		
 		private function test() : void {
+			
 			var stve : StandardVehicle = new StandardVehicle();
-			var stve1 : StandardVehicle = new StandardVehicle();
-			var stve2 : StandardVehicle = new StandardVehicle();
-			var stve3 : StandardVehicle = new StandardVehicle();
-			var stve4 : StandardVehicle = new StandardVehicle();
 			var bve : BlindVehicle = new BlindVehicle(stve);
-
 			var b : StandardBullet = new StandardBullet();
 			var w : StandardWeapon = new StandardWeapon(b);
-			var ow : OrientedWeapon = new OrientedWeapon(w);
 			var ws : Vector.<IWeapon> = new Vector.<IWeapon>();
-			ws.push(ow);
+			ws.push(w);
 			var ave : ArmedVehicle = new ArmedVehicle(bve, ws);
 			
-	
-
+		
+			
 			position(stve);
 			addChild(stve);
-			position(stve1);
-			addChild(stve1);
-			position(stve2);
-			addChild(stve2);	
-			position(stve3);
-			addChild(stve3);	
-			position(stve4);
-			addChild(stve4);
-			
-			//survey(w);
-			//survey(ave);
-			survey(stve1);
-			survey(stve2);
-			survey(stve3);
-			survey(stve4);
-			//survey(bve);	
+			surveyVehicle(ave);
+			addChild(w);
+			surveyWeapon(w);
 		}
 		
 		public function Game(map:Map, bulletXml:XMLList, mapXml:XMLList, m_shipXml:XMLList, m_weaponXml:XMLList) {
 			Rndm.seed = Math.floor(Math.random() * 1000 - 10 + 1) + 1;
-			m_displayControllers = new Vector.<IDecorator>();
+			m_displayBullets = new Vector.<IBullet>();
+			m_displayVehicles = new Vector.<IVehicle>();
+			m_displayWeapons = new Vector.<IWeapon>();
 			m_map = map;
-		
-			var playerStandardWeapon : StandardWeapon = new StandardWeapon(new StandardBullet());
-			var playerWeapon : OrientedWeapon = new OrientedWeapon(playerStandardWeapon);
-			var playerWeapons : Vector.<IWeapon> = new Vector.<IWeapon>();
-			playerWeapons.push(playerWeapon);
-			var playerStandardVehicle : StandardVehicle = new StandardVehicle("Kart");
-			m_player = new Player(playerWeapon, playerStandardWeapon, playerStandardVehicle, new ArmedVehicle(playerStandardVehicle, playerWeapons));
+
 			m_life = new TextField();
 			m_life.text = "LIFE : 100";
 			m_life.x = 10;
 			m_life.y = 10;
 			m_life.textColor = 0xFFFFFF;
 			addChild(m_life);
+			
+			var stve : StandardVehicle = new StandardVehicle("Kart");
+			var b : StandardBullet = new StandardBullet();
+			var w : StandardWeapon = new StandardWeapon(b,StandardWeapon.STANDARD_SKIN, 10);
+			var xs : OrientedWeapon = new OrientedWeapon(w);
+			var ws : Vector.<IWeapon> = new Vector.<IWeapon>();
+			ws.push(w);
+			var ave : ArmedVehicle = new ArmedVehicle(stve, ws, true);
+			
+			m_player = new Player(stve, ave, w, xs);
 			
 			m_score = new TextField();
 			m_score.text = "SCORE : " + m_player.score;
@@ -129,27 +122,66 @@ package imac.diehardkart {
 		}
 		
 		//Make one survey by listener
-		private function survey(obj : EventDispatcher) : void {
-			obj.addEventListener(CustomEvent.DEAD, deadObject);
-			obj.addEventListener(CustomEvent.SHOOT, addBullet);
-			m_displayControllers.push(obj);
-		}
-
-		private function  addBullet(evt : CustomEvent):void {
-			addChild(evt.target.bullet);
-			survey(evt.target.bullet);
-		}
-
-		private function deadObject(evt : Event) : void {
-			var obj : Decorator = evt.target as Decorator;
-			obj.removeEventListener(CustomEvent.DEAD, deadObject);
-			removeChild(DisplayObject(obj));
-			destruct(obj);
+		private function surveyBullet(obj :IBullet) : void {
+			obj.addEventListener(CustomEvent.DEAD, deadBullet);
+			m_displayBullets.push(obj);
 		}
 		
-		private function destruct(obj : IDecorator) : void {
-			trace("destruct");
-			m_displayControllers.splice(m_displayControllers.indexOf(obj), 1);
+		private function surveyWeapon(obj : IWeapon) : void {
+			obj.addEventListener(CustomEvent.DEAD, deadWeapon);
+			obj.addEventListener(CustomEvent.SHOOT, addBullet);
+			m_displayWeapons.push(obj);
+		}
+		
+		private function surveyVehicle(obj : IVehicle) : void {
+			obj.addEventListener(CustomEvent.DEAD, deadVehicle);
+			m_displayVehicles.push(obj);
+		}
+
+		private function addBullet(evt : CustomEvent):void {
+			addChild(evt.target.bullet);
+			surveyBullet(evt.target.bullet);
+		}
+
+		private function deadBullet(evt : Event) : void {
+			var obj : IBullet = evt.target as IBullet;
+			obj.removeEventListener(CustomEvent.DEAD, deadBullet);
+			obj.removeEventListener(CustomEvent.SHOOT, addBullet);
+			removeChild(DisplayObject(obj));
+			destructBullet(obj);
+		}
+
+		private function deadWeapon(evt : Event) : void {
+			var obj : IWeapon = evt.target as IWeapon;
+			obj.removeEventListener(CustomEvent.DEAD, deadWeapon);
+			removeChild(DisplayObject(obj));
+			destructWeapon(obj);
+		}
+
+		private function deadVehicle(evt : Event) : void {
+			var obj : IVehicle = evt.target as IVehicle;
+			obj.removeEventListener(CustomEvent.DEAD, deadVehicle);
+			removeChild(DisplayObject(obj));
+			destructVehicle(obj);
+		}
+		
+		private function destructBullet(obj : IBullet) : void {
+			trace("Destruct IBullet");
+			m_displayBullets.splice(m_displayBullets.indexOf(obj), 1);
+			obj.destructor();
+			obj = null;
+		}
+		
+		private function destructVehicle(obj : IVehicle) : void {
+			trace("Destruct IVehicle");
+			m_displayVehicles.splice(m_displayVehicles.indexOf(obj), 1);
+			obj.destructor();
+			obj = null;
+		}
+		
+		private function destructWeapon(obj : IWeapon) : void {
+			trace("Destruct IWeapon");
+			m_displayWeapons.splice(m_displayWeapons.indexOf(obj), 1);
 			obj.destructor();
 			obj = null;
 		}
@@ -191,11 +223,11 @@ package imac.diehardkart {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			addChildAt(m_map.mapBitmap, 0);
 
-			survey(m_player.viewVehicle);
-			addChild(m_player.viewVehicle);
-			survey(m_player.viewWeapon);
-			addChild(m_player.viewWeapon);
-			
+			position(m_player.stdVehicle);
+			addChild(m_player.stdVehicle);
+			surveyVehicle(m_player.decoVehicle);
+			addChild(m_player.stdWeapon);
+						
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, catchKeyEventDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, catchKeyEventUp);
 
@@ -204,37 +236,63 @@ package imac.diehardkart {
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, catchMouseEvent);
 			stage.addEventListener(MouseEvent.MOUSE_UP, catchMouseEvent);
 			
-			//test();	
+			test();	
 		}
 		
 		private function catchMouseEvent(evt : MouseEvent) : void {
 			switch(evt.type) {
 				case MouseEvent.MOUSE_MOVE :
-					m_player.weapon.aim(stage.mouseX, stage.mouseY);
+					m_player.decoWeapon.aim(stage.mouseX, stage.mouseY);
 					break;
 				case MouseEvent.MOUSE_DOWN :
-					m_player.weapon.addEventListener(CustomEvent.SHOOT, addBullet);
-					m_displayControllers.push(m_player.weapon);				
+					m_player.stdWeapon.addEventListener(CustomEvent.SHOOT, addBullet);
+					m_displayWeapons.push(m_player.stdWeapon);				
 					break;
 				case MouseEvent.MOUSE_UP :
-					m_displayControllers.splice(m_displayControllers.indexOf(m_player.weapon), 1);
-					m_player.weapon.removeEventListener(CustomEvent.SHOOT, addBullet);
+					m_displayWeapons.splice(m_displayWeapons.indexOf(m_player.stdWeapon), 1);
+					m_player.stdWeapon.removeEventListener(CustomEvent.SHOOT, addBullet);
 					break;
 			}
 		}
 		
 		private function loop(evt : Event) : void {
-			for each (var obj : IDecorator in m_displayControllers) {
-				obj.loop();
-				if (obj.x < -obj.width || obj.y < -obj.height
-					|| obj.x > stage.stageWidth + obj.width
-					|| obj.y > stage.stageHeight + obj.height) {
-					destruct(obj);
+			for each (var vehicle : IVehicle in m_displayVehicles) {
+				vehicle.loop();
+				
+				/*for each (var collBullet : IBullet in m_displayBullets) {
+					trace(vehicle);
+					if (collBullet.hitTestObject(vehicle as DisplayObject)) {
+						trace("collision\n--------");
+						trace(vehicle.looseLife(collBullet.damage));
+						
+					}
+				}*/
+				
+				if (vehicle.x < -vehicle.width || vehicle.y < -vehicle.height
+					|| vehicle.x > stage.stageWidth + vehicle.width
+					|| vehicle.y > stage.stageHeight + vehicle.height) {
+					destructVehicle(vehicle);
 				}
-				m_player.kart.loop();
-				m_map.kartZone(m_player.kart);
-
 			}
+			for each (var bullet : IBullet in m_displayBullets) {
+				bullet.loop();
+				if (bullet.x < -bullet.width || bullet.y < -bullet.height
+					|| bullet.x > stage.stageWidth + bullet.width
+					|| bullet.y > stage.stageHeight + bullet.height) {
+					destructBullet(bullet);
+				}
+			}
+			for each (var weapon : IWeapon in m_displayWeapons) {
+				weapon.loop();
+				if (weapon.x < -weapon.width || weapon.y < -weapon.height
+					|| weapon.x > stage.stageWidth + weapon.width
+					|| weapon.y > stage.stageHeight + weapon.height) {
+					destructWeapon(weapon);
+				}
+				//trace("\n");
+			}
+			m_player.kart.loop();
+			m_map.kartZone(m_player.kart);
 		}
 	}
 }

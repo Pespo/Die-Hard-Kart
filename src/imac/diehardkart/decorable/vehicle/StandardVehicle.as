@@ -1,4 +1,5 @@
 package imac.diehardkart.decorable.vehicle {
+	import flash.display.DisplayObject;
 	import imac.diehardkart.utils.CustomEvent;
 	import imac.diehardkart.utils.Labels;
 	import flash.utils.getDefinitionByName;
@@ -61,10 +62,16 @@ package imac.diehardkart.decorable.vehicle {
 			}
 		}
 		
-		public function looseLife(l : uint) : void {
-			m_life -= l * (MAX_ARMOR - m_armor);
+		override public function hitTestObject(obj : DisplayObject) : Boolean {
+			trace(super.hitTestObject(obj));
+			return super.hitTestObject(obj);
+		}
+		
+		public function looseLife(damage : Number) : Number {
+			m_life -= damage * (MAX_ARMOR - m_armor);// * m_armor;
 			if (m_life <= 0)
 				explode();
+			return m_life;
 		}
 		
 		private function die() : void {
@@ -89,6 +96,6 @@ package imac.diehardkart.decorable.vehicle {
 			removeChild(m_view);
 			m_view.stop();
 			m_view = null;
-		}
+		}		
 	}
 }

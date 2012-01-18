@@ -35,7 +35,6 @@ package imac.diehardkart.decorable.weapon {
 			m_shootRate = (shootRate < STANDARD_SHOOT_RATE || shootRate >= MAX_SHOOT_RATE) ? STANDARD_SHOOT_RATE : shootRate;
 			m_shootRate = (MAX_SHOOT_RATE - m_shootRate) * COEFF_SHOOT_RATE;
 			m_shootCounter = m_shootRate;
-			trace("shoot counter " + m_shootCounter);
 			m_bullet = bullet;
 		}
 
@@ -70,6 +69,14 @@ package imac.diehardkart.decorable.weapon {
 		
 		public function set view(v : MovieClip) : void {
 			m_view = v;
+		}
+		
+		override public function destructor() : void {
+			trace("Destruct StandardWeapon");
+			super.destructor();
+			removeChild(m_view);
+			m_view.stop();
+			m_view = null;
 		}
 	}
 }

@@ -18,7 +18,10 @@ package imac.diehardkart.decorable {
 		function get width() : Number;
 		function get dx() : Number;
 		function get dy() : Number;
+		function get rotation() : Number;
+		function set rotation(r : Number) : void;
 		function setOrientation(dx : Number, dy : Number) : void;
+		function hitTestObject(obj : DisplayObject) : Boolean;
 		function destructor() : void;
 		function addChild(child : DisplayObject) : DisplayObject;
 		function addEventListener(type  : String, listener : Function, useCapture : Boolean = false, priority : int = 0, useWeakReference : Boolean = false) : void;

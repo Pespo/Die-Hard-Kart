@@ -10,5 +10,10 @@ package imac.diehardkart.decorable.bullet {
 		public function clone() : IBullet {
 			return null;
 		}
+		
+		public function get damage() : Number {
+			var deco : IBullet = m_decorated as IBullet;
+			return deco.damage;
+		}
 	}
 }

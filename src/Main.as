@@ -9,7 +9,7 @@
 	public class Main extends Sprite {
 		private static var m_game : Game;
 		private var m_map : Map;
-		private var m_objectsTotal : Number = 5;
+		private var m_objectsTotal : Number = 1;
 		private var m_objectsLoaded : Number = 0;
 		private var m_bulletXml : XMLList;
 		private var m_mapXml : XMLList;
@@ -17,10 +17,10 @@
 		private var m_weaponXml : XMLList;
 
 		public function Main() {
-			loadXMLData("../res/bullet.xml", m_bulletXml);
-			loadXMLData("../res/map.xml", m_mapXml);
-			loadXMLData("../res/ship.xml", m_shipXml);
-			loadXMLData("../res/weapon.xml", m_weaponXml);
+			//loadXMLData("../res/bullet.xml", m_bulletXml);
+			//loadXMLData("../res/map.xml", m_mapXml);
+			//loadXMLData("../res/ship.xml", m_shipXml);
+			//loadXMLData("../res/weapon.xml", m_weaponXml);
 			m_map = new Map("../res/maps/mapTest.png", "../res/maps/refmapTest.png");
 			m_game = new Game(m_map, m_bulletXml, m_mapXml, m_shipXml, m_weaponXml);
 			

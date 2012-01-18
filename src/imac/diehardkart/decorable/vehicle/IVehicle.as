@@ -3,5 +3,6 @@ package imac.diehardkart.decorable.vehicle {
 	
 	public interface IVehicle extends IDecorator {
 
-		}
+		function looseLife(damage : Number) : Number;
+	}
 }

@@ -22,7 +22,7 @@ package imac.diehardkart.decorable {
 		}
 		
 		public function loop() : void {
-			m_decorated.loop();
+				m_decorated.loop();
 		}
 		
 		public function rotate(a : Number) : void {
@@ -53,6 +53,14 @@ package imac.diehardkart.decorable {
 			m_decorated.y = y;
 		}
 		
+		public function get rotation() : Number {
+			return m_decorated.rotation;
+		}
+		
+		public function set rotation(r : Number) : void {
+			m_decorated.rotation = r;
+		}
+		
 		public function get dx() : Number {
 			return m_decorated.dx;
 		}
@@ -74,7 +82,7 @@ package imac.diehardkart.decorable {
 		}
 		
 		public function destructor() : void {
-			trace("Destruct Decorator");
+			trace("Destruct Decorator " + this);
 			m_decorated.destructor();
 			m_decorated = null;
 		}
@@ -83,6 +91,9 @@ package imac.diehardkart.decorable {
 			return m_decorated.addChild(child);		
 		}
 
+		public function hitTestObject(obj : DisplayObject) : Boolean {
+			return m_decorated.hitTestObject(obj);
+		}
 		
 		override public function addEventListener(type  : String, listener : Function, useCapture : Boolean = false, priority : int = 0, useWeakReference : Boolean = false) : void {
 			m_decorated.addEventListener(type, listener, useCapture, priority, useWeakReference);
