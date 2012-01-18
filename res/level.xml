@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<levels>
+	<level id="0">
+		<lap nb="3"></lap>
+		<time>30</time>
+		<ships>
+			<ship id="0">3</ship>
+			<ship id="1">2</ship>
+			<ship id="2">1</ship>
+		</ships>
+	</level>
+</levels>

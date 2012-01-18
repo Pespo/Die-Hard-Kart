@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weapons>
+	<weapon id="0">
+		<name>MaKalash</name>
+		<bullet>0</bullet>
+		<shootRate>6</shootRate>
+		<skin>StandarWeaponSkin</skin>
+	</weapon>
+</weapons>

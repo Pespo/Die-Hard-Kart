@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ships>
+	<ship id="0">
+		<name>FX2000</name>
+		<decorator>
+			<type>ArmedVehicle</type>
+		</decorator>
+		<weapons>
+			<weapon id="0">1</weapon>
+		</weapons>
+		<speed>1</speed>
+		<life>100</life>
+		<armor>1</armor>
+		<rayExplosion>30</rayExplosion>
+		<damageExplosion>5</damageExplosion>
+		<skin>StandardVehicleSkin</skin>
+	</ship>
+	<ship id="1">
+		<name>YZ3002</name>
+		<decorator>
+			<type>ArmedVehicle</type>
+			<type>BlindVehicle</type>
+		</decorator>
+		<weapons>
+			<weapon id="0">1</weapon>
+		</weapons>
+		<speed>1</speed>
+		<life>100</life>
+		<armor>1</armor>
+		<rayExplosion>30</rayExplosion>
+		<damageExplosion>5</damageExplosion>
+		<skin>StandardVehicleSkin</skin>
+	</ship>
+	<ship id="2">
+		<name>KX6050</name>
+		<decorator>
+			<type>ArmedVehicle</type>
+		</decorator>
+		<weapons>
+			<weapon id="0">1</weapon>
+		</weapons>
+		<speed>1</speed>
+		<life>100</life>
+		<armor>5</armor>
+		<rayExplosion>30</rayExplosion>
+		<damageExplosion>5</damageExplosion>
+		<skin>StandardVehicleSkin</skin>
+	</ship>
+</ships>

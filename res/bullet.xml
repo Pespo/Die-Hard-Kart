@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bullets>
+	<bullet id="0">
+		<name>BaseBall</name>
+		<speed>8</speed>
+		<damage>10</damage>
+	</bullet>
+</bullets>
