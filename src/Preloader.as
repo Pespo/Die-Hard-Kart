@@ -9,8 +9,10 @@ package {
 		private var m_firstEnterFrame : Boolean;
 		private	var m_preloaderBackground : Shape; 
 		private var m_preloaderPercent : Shape;
+		private var m_main : Main;
 		
 		public function Preloader() {
+			m_main = new Main();
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			stop();
 		}
@@ -30,7 +32,7 @@ package {
 		private function onEnterFrame(event : Event) : void {
 			if (m_firstEnterFrame) {
 				m_firstEnterFrame = false;
-				if (root.loaderInfo.bytesLoaded >= root.loaderInfo.bytesTotal) {
+				if (root.loaderInfo.bytesLoaded >= root.loaderInfo.bytesTotal && m_main.objectsLoaded >= m_main.objectsTotal) {
 					dispose();
 					run();
 				} else {
@@ -39,7 +41,7 @@ package {
 				return;
 			}
 
-			if (root.loaderInfo.bytesLoaded >= root.loaderInfo.bytesTotal) {
+			if (root.loaderInfo.bytesLoaded >= root.loaderInfo.bytesTotal && m_main.objectsLoaded >= m_main.objectsTotal) {
 				dispose();
 				run();
 			} else {
@@ -87,8 +89,7 @@ package {
 		}
 		private function run() : void {
 			nextFrame();
-			var main : Main = new Main();
-			stage.addChildAt(main, 0);
+			stage.addChildAt(m_main, 0);
 		}
 	}
 }

@@ -44,11 +44,11 @@ package imac.diehardkart {
 			//survey(bve);	
 		}
 		
-		public function Game() {
+		public function Game(map :Map) {
 			Rndm.seed = Math.floor(Math.random() * 1000 - 10 + 1) + 1;
 			m_displayControllers = new Vector.<IDecorator>();
 			m_viewKart = new StandardVehicle("Kart");
-			m_map = new Map("../res/maps/mapTest.png");
+			m_map = map;
 			m_kart = new Kart(m_viewKart);
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
@@ -124,7 +124,7 @@ package imac.diehardkart {
 		private function onAddedToStage(evt : Event) : void {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			addChild(m_viewKart);
-			addChildAt(m_map.mapBitmap, 0);
+			addChildAt(m_map.refMapBitmap, 0);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, catchUserEvent);
 			stage.addEventListener(KeyboardEvent.KEY_UP, catchUserEvent);
 			addEventListener(Event.ENTER_FRAME, loop);
