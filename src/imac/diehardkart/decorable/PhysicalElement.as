@@ -7,9 +7,9 @@ package imac.diehardkart.decorable {
 		private var m_speed : Number;
 		
 		public static const STANDARD_SPEED : Number = 2;
-		public static const MAX_SPEED : Number = 5;
-		public static const MIN_SPEED : Number = 0;
-		public static const STANDARD_ANGLE : Number = 45;
+		public static const MAX_SPEED : Number = 10;
+		public static const MIN_SPEED : Number = -2;
+		public static const STANDARD_ANGLE : Number = 0;
 		public static const STANDARD_DX : Number = 0.5;
 		public static const STANDARD_DY : Number = 0;
 
@@ -46,6 +46,7 @@ package imac.diehardkart.decorable {
 			rotation = angle;
 			m_dx = Math.cos(Math.PI * angle / 180);
 			m_dy = Math.sin(Math.PI * angle / 180);
+
 		}
 
 		public function setOrientation(dx : Number, dy : Number) : void {
@@ -79,7 +80,7 @@ package imac.diehardkart.decorable {
 		}
 		
 		public function destructor() : void {
-			trace("Destruct PhysicalElement");
+			//trace("Destruct PhysicalElement");
 		}
 	}
 }

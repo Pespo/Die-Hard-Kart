@@ -1,7 +1,8 @@
 ._*
 .project
-.as3proj
+*.as3proj
 .settings
 *.swf
 *.swc
 *.fla
+*Config.xml

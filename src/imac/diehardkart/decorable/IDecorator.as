@@ -1,4 +1,6 @@
 package imac.diehardkart.decorable {
+
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	
 	public interface IDecorator {
@@ -18,5 +20,9 @@ package imac.diehardkart.decorable {
 		function get dy() : Number;
 		function setOrientation(dx : Number, dy : Number) : void;
 		function destructor() : void;
+
+		function addChild(child : DisplayObject) : DisplayObject;
+		function addEventListener(type  : String, listener : Function, useCapture : Boolean = false, priority : int = 0, useWeakReference : Boolean = false) : void;
+		function removeEventListener(type  : String, listener : Function, useCapture : Boolean = false) : void;
 	}
 }

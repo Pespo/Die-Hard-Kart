@@ -2,7 +2,8 @@ package imac.diehardkart.decorable.vehicle {
 	import imac.diehardkart.decorable.Decorator;
 	import com.gskinner.utils.Rndm;
 
-	public class BlindVehicle extends Decorator {
+	public class BlindVehicle extends VehicleDecorator {
+
 		private var m_frameCounter : uint;
 		private var m_wait : uint;
 		private var m_rotation : int;

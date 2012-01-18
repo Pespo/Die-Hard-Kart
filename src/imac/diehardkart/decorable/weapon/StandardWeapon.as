@@ -1,20 +1,25 @@
 package imac.diehardkart.decorable.weapon {
 	import imac.diehardkart.utils.CustomEvent;
 	import flash.display.MovieClip;
+
+	import flash.geom.Point;
 	import imac.diehardkart.utils.Labels;
 	import flash.utils.getDefinitionByName;
 	import imac.diehardkart.decorable.bullet.IBullet;
 	import imac.diehardkart.decorable.PhysicalElement;
+
+	import assets.skins.StandardWeaponSkin;
+
 	
 	public class StandardWeapon extends PhysicalElement implements IWeapon {
-		
-		
+
 		private var m_shootRate : Number;
 		private var m_shootCounter : Number;
 		private var m_bullet : IBullet;
 		private var m_view : MovieClip;
 		private var m_launchBullet : IBullet;
-		
+		private var implementSkinWeapon : StandardWeaponSkin = new StandardWeaponSkin();		
+
 		public static const STANDARD_SHOOT_RATE : Number = 10;
 		public static const MAX_SHOOT_RATE : Number = 10;
 		public static const MIN_SHOOT_RATE : Number = 1;
@@ -25,19 +30,19 @@ package imac.diehardkart.decorable.weapon {
 										skin : String = STANDARD_SKIN,	
 										shootRate : Number = STANDARD_SHOOT_RATE) {	
 			super();
-			
-			var SkinClass : Class = getDefinitionByName(skin) as Class;
+			var SkinClass : Class = getDefinitionByName("assets.skins." + skin) as Class;
 			m_view = new SkinClass();
 			m_view.gotoAndPlay(Labels.INIT);
-			this.addChild(m_view);								
-			
+			addChild(m_view);								
+		
 			m_shootRate = (m_shootRate < MIN_SHOOT_RATE || m_shootRate > MAX_SHOOT_RATE) ? STANDARD_SHOOT_RATE : shootRate;
-			m_shootCounter = 0;
+			m_shootCounter = m_shootRate;
 			m_bullet = bullet;
 		}
 
 		private function makeBullet() : void {
 			m_launchBullet = m_bullet.clone();
+			var bulletStartPosition : Point =  m_view.localToGlobal(new Point(0, 0));
 			m_launchBullet.x = x;
 			m_launchBullet.y = y;
 			m_launchBullet.rotate(rotation);
@@ -46,7 +51,8 @@ package imac.diehardkart.decorable.weapon {
 		
 		public function shoot() : void {
 			++m_shootCounter;
-			if (m_shootRate < m_shootCounter) {
+			if (m_shootRate <= m_shootCounter) {
+				trace("shoot");
 				makeBullet();
 				dispatchEvent(new CustomEvent(CustomEvent.SHOOT));
 				m_shootCounter = 0;
