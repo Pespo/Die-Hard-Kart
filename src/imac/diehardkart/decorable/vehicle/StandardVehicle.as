@@ -11,7 +11,7 @@ package imac.diehardkart.decorable.vehicle {
 		private var m_life : Number;
 		private var m_damageExplosion : Number;
 		private var m_rayExplosion : Number;
-		private var m_coeffLoseLife : Number;
+		private var m_armor : Number;
 		private var m_view : MovieClip;
 		private var m_explode : Boolean = false;
 	
@@ -19,14 +19,15 @@ package imac.diehardkart.decorable.vehicle {
 
 		protected static const STANDARD_SKIN : String = "StandardVehicleSkin";
 		public static const STANDARD_LIFE : Number = 100;
-		public static const STANDARD_COEFF_LIFE : Number = 1;
+		public static const STANDARD_ARMOR : int = 1;
+		public static const MAX_ARMOR : int = 11;
 		public static const STANDARD_DAMAGE_EXPLOSION : Number = 10;
 		public static const STANDARD_RAY_EXPLOSION : Number = 20;
 		
 		public function StandardVehicle(skin : String = STANDARD_SKIN,
 										speed : Number = STANDARD_SPEED,
 										life : Number = STANDARD_LIFE,
-										coeff : uint = STANDARD_COEFF_LIFE,
+										armor : uint = STANDARD_ARMOR,
 										damage : Number = STANDARD_DAMAGE_EXPLOSION,
 										ray : Number = STANDARD_RAY_EXPLOSION) {
 			super(PhysicalElement.STANDARD_ANGLE, speed);
@@ -38,7 +39,7 @@ package imac.diehardkart.decorable.vehicle {
 			
 			m_life = life;
 			m_damageExplosion = damage;
-			m_coeffLoseLife = coeff;
+			m_armor = (armor < STANDARD_ARMOR || armor >= MAX_ARMOR) ? STANDARD_ARMOR : armor;
 			m_rayExplosion = ray;
 		}
 		
@@ -61,7 +62,7 @@ package imac.diehardkart.decorable.vehicle {
 		}
 		
 		public function looseLife(l : uint) : void {
-			m_life -= l * m_coeffLoseLife;
+			m_life -= l * (MAX_ARMOR - m_armor);
 			if (m_life <= 0)
 				explode();
 		}

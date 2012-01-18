@@ -96,7 +96,7 @@ package imac.diehardkart.map {
 		}
 		
 		private function kartOut() : void {
-			trace("loose");
+			//trace("loose");
 		}
 		
 		private function checkpointPassed() : void {

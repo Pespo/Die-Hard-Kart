@@ -17,10 +17,10 @@ package imac.diehardkart.decorable.weapon {
 		private var m_view : MovieClip;
 		private var m_launchBullet : IBullet;
 		private var implementSkinWeapon : StandardWeaponSkin = new StandardWeaponSkin();		
+		private const  COEFF_SHOOT_RATE: int = 10;
 
-		public static const STANDARD_SHOOT_RATE : Number = 10;
-		public static const MAX_SHOOT_RATE : Number = 10;
-		public static const MIN_SHOOT_RATE : Number = 1;
+		public static const STANDARD_SHOOT_RATE : int = 1;
+		public static const MAX_SHOOT_RATE : int = 11;
 		public static const STANDARD_DIRECTION : Number = 0;
 		public static const STANDARD_SKIN : String = "StandardWeaponSkin";
 		
@@ -31,10 +31,11 @@ package imac.diehardkart.decorable.weapon {
 			var SkinClass : Class = getDefinitionByName("assets.skins." + skin) as Class;
 			m_view = new SkinClass();
 			m_view.gotoAndPlay(Labels.INIT);
-			addChild(m_view);								
-		
-			m_shootRate = (m_shootRate < MIN_SHOOT_RATE || m_shootRate > MAX_SHOOT_RATE) ? STANDARD_SHOOT_RATE : shootRate;
+			addChild(m_view);	
+			m_shootRate = (shootRate < STANDARD_SHOOT_RATE || shootRate >= MAX_SHOOT_RATE) ? STANDARD_SHOOT_RATE : shootRate;
+			m_shootRate = (MAX_SHOOT_RATE - m_shootRate) * COEFF_SHOOT_RATE;
 			m_shootCounter = m_shootRate;
+			trace("shoot counter " + m_shootCounter);
 			m_bullet = bullet;
 		}
 
@@ -43,7 +44,7 @@ package imac.diehardkart.decorable.weapon {
 			m_launchBullet.x = x;
 			m_launchBullet.y = y;
 			m_launchBullet.rotate(rotation);
-			m_launchBullet.speed = 10;
+			//m_launchBullet.speed = 2;
 		}
 		
 		public function shoot() : void {
