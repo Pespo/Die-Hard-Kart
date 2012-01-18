@@ -68,7 +68,7 @@ package imac.diehardkart {
 			Rndm.seed = Math.floor(Math.random() * 1000 - 10 + 1) + 1;
 			m_displayControllers = new Vector.<IDecorator>();
 			m_map = map;
-			
+		
 			var playerStandardWeapon : StandardWeapon = new StandardWeapon(new StandardBullet());
 			var playerWeapon : OrientedWeapon = new OrientedWeapon(playerStandardWeapon);
 			var playerWeapons : Vector.<IWeapon> = new Vector.<IWeapon>();

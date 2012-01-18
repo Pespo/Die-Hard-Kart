@@ -13,21 +13,24 @@ package imac.diehardkart.decorable.bullet {
 		private var m_damage : Number;
 		private var m_view : MovieClip;
 		private var m_skin : String;
-
 		private var m_explode : Boolean = false;
+		
 		public static const STANDARD_DAMAGE : Number = 10;
 		public static const STANDARD_SKIN : String = "StandardBulletSkin";
+		public static const COEFF_BULLET_SPEED : int = MAX_SPEED / 2;
+		public static const STANDARD_SPEED_BULLET : int =1;
+		public static const MAX_SPEED_BULLET : int = 10;
 		
-		public function StandardBullet(skin : String = STANDARD_SKIN, damage : Number = STANDARD_DAMAGE) {
-			super();
-
+		public function StandardBullet(skin : String = STANDARD_SKIN, damage : Number = STANDARD_DAMAGE, speedMovement : Number = STANDARD_SPEED) {
+			var test : Number = (speedMovement < STANDARD_SPEED_BULLET || speedMovement > MAX_SPEED_BULLET) ? STANDARD_SPEED_BULLET * COEFF_BULLET_SPEED : 5 / (MAX_SPEED_BULLET - STANDARD_SPEED_BULLET) * (speedMovement - STANDARD_SPEED_BULLET) + COEFF_BULLET_SPEED;
+			trace(" -- " + test)
+			super(PhysicalElement.STANDARD_ANGLE, test);
+			trace(" -- " + test)
 			m_skin = skin;
 			var SkinClass : Class = getDefinitionByName("assets.skins." + skin) as Class;
-
 			m_view = new SkinClass();
 			m_view.gotoAndPlay(Labels.INIT);
 			this.addChild(m_view);
-			
 			m_damage = damage;
 		}
 		
@@ -41,6 +44,7 @@ package imac.diehardkart.decorable.bullet {
 		public function clone() : IBullet {
 			var targetClass:Class = Object(this).constructor as Class;
 			var duplicate:IBullet = new targetClass(m_skin, m_damage);
+			duplicate.speed = speed;
 			return duplicate;
 		}
 		
