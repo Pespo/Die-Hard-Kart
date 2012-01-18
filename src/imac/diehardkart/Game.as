@@ -1,5 +1,6 @@
 package imac.diehardkart {
 
+	import flash.text.TextField;
 	import imac.diehardkart.map.Map;
 	import imac.diehardkart.decorable.vehicle.Kart;
 	import flash.events.KeyboardEvent;
@@ -25,6 +26,8 @@ package imac.diehardkart {
 		private var m_displayControllers : Vector.<IDecorator>;
 		private var m_player : Player;
 		private var m_map : Map;
+		private var m_score : TextField;
+		private var m_life : TextField;
 
 		
 		private function test() : void {
@@ -64,7 +67,7 @@ package imac.diehardkart {
 			//survey(bve);	
 		}
 		
-		public function Game(map : Map) {
+		public function Game(map:Map, bulletXml:XMLList, mapXml:XMLList, m_shipXml:XMLList, m_weaponXml:XMLList) {
 			Rndm.seed = Math.floor(Math.random() * 1000 - 10 + 1) + 1;
 			m_displayControllers = new Vector.<IDecorator>();
 			m_map = map;
@@ -75,7 +78,19 @@ package imac.diehardkart {
 			playerWeapons.push(playerWeapon);
 			var playerStandardVehicle : StandardVehicle = new StandardVehicle("Kart");
 			m_player = new Player(playerWeapon, playerStandardWeapon, playerStandardVehicle, new ArmedVehicle(playerStandardVehicle, playerWeapons));
+			m_life = new TextField();
+			m_life.text = "LIFE : 100";
+			m_life.x = 10;
+			m_life.y = 10;
+			m_life.textColor = 0xFFFFFF;
+			addChild(m_life);
 			
+			m_score = new TextField();
+			m_score.text = "SCORE : " + m_player.score;
+			m_score.x = 500;
+			m_score.y = 10;
+			m_score.textColor = 0xFFFF00;
+			addChild(m_score);
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		

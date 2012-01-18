@@ -11,6 +11,7 @@ package imac.diehardkart {
 		private var m_viewVehicle : StandardVehicle;
 		private var m_controlVehicle : ArmedVehicle;
 		private var m_kart : Kart;
+		private var m_score : int;
 		
 		public function Player(controlW : OrientedWeapon, viewW : StandardWeapon, viewV : StandardVehicle, controlV : ArmedVehicle) {
 			m_controlWeapon = controlW;
@@ -18,6 +19,15 @@ package imac.diehardkart {
 			m_viewVehicle = viewV;
 			m_controlVehicle = controlV;
 			m_kart = new Kart(m_controlVehicle);
+			m_score = 0;
+		}
+		
+		public function set score(value : int) : void {
+			m_score = value;
+		}
+		
+		public function get score() : int {
+			return m_score;
 		}
 		
 		public function set kart(value : Kart) : void {

@@ -79,6 +79,10 @@ package imac.diehardkart.decorable.vehicle {
 			m_view = v;
 		}
 		
+		public function get life() : Number {
+			return m_life;
+		}
+		
 		override public function destructor() : void {
 			trace("Destruct StandardVehicle");
 			super.destructor();

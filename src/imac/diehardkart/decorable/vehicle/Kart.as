@@ -43,11 +43,11 @@ package imac.diehardkart.decorable.vehicle {
 				speed = speed  + FRICTION < 0 ? speed + FRICTION : 0;
 			}
 		}
-
-		public function setDirection(dir : Number, state : Boolean) : void {
-			m_controls[dir] = state;
+		
+	   public function setDirection(dir : Number, state : Boolean) : void {
+			   m_controls[dir] = state;
 		}
-
+		
 		private function updatePostion() : void {
 			if (m_controls[LEFT] && (speed >= ACCELERATION || speed <= -ACCELERATION)) {
 				rotate(-ROTATION);

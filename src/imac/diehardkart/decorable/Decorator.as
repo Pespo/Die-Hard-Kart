@@ -11,6 +11,7 @@ package imac.diehardkart.decorable {
 		public function Decorator(decorated : IDecorator) {
 			m_decorated = decorated;
 		}
+
 		
 		public function get view() : MovieClip {
 			return m_decorated.view;
