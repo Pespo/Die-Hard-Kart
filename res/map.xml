@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<levels>
+	<level id="">
+		<lap>
+			<time></time>
+			<ships>
+				<ship id="" nb=""></ship>
+				<ship id="" nb=""></ship>
+				<ship id="" nb=""></ship>
+				<ship id="" nb=""></ship>
+			</ships>				
+		</lap>
+	</level>
+	<level id="">
+	</level>
+	<level id="">
+	</level>
+<levels>

@@ -68,19 +68,13 @@ package imac.diehardkart {
 			Rndm.seed = Math.floor(Math.random() * 1000 - 10 + 1) + 1;
 			m_displayControllers = new Vector.<IDecorator>();
 			m_map = map;
-			var qgqge : StandardWeapon = new StandardWeapon(new StandardBullet());
 			
-			var weapon : OrientedWeapon = new OrientedWeapon(qgqge);
-			var weapons : Vector.<IWeapon> = new Vector.<IWeapon>();
-			weapons.push(weapon);
-			var qsg : StandardVehicle = new StandardVehicle("Kart");
-			survey(qsg);
-			addChild(qsg);
-			
-			survey(qgqge);
-			addChild(qgqge);
-			var ac : ArmedVehicle = new ArmedVehicle(qsg, weapons);
-			m_player = new Player(weapon, new StandardVehicle(), ac);
+			var playerStandardWeapon : StandardWeapon = new StandardWeapon(new StandardBullet());
+			var playerWeapon : OrientedWeapon = new OrientedWeapon(playerStandardWeapon);
+			var playerWeapons : Vector.<IWeapon> = new Vector.<IWeapon>();
+			playerWeapons.push(playerWeapon);
+			var playerStandardVehicle : StandardVehicle = new StandardVehicle("Kart");
+			m_player = new Player(playerWeapon, playerStandardWeapon, playerStandardVehicle, new ArmedVehicle(playerStandardVehicle, playerWeapons));
 			
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
@@ -182,6 +176,11 @@ package imac.diehardkart {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			addChildAt(m_map.mapBitmap, 0);
 
+			survey(m_player.viewVehicle);
+			addChild(m_player.viewVehicle);
+			survey(m_player.viewWeapon);
+			addChild(m_player.viewWeapon);
+			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, catchKeyEventDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, catchKeyEventUp);
 

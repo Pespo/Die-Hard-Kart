@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ships>
+	<ship id="">
+		<name></name>
+		<speed></speed>
+	</ship>
+	<ship id="">
+		<name></name>
+		<speed></speed>
+		<weapons>
+			<weapon id=""></weapon>
+			<weapon id=""></weapon>
+			<weapon id=""></weapon>
+		</weapons>
+	</ship>
+</ships>

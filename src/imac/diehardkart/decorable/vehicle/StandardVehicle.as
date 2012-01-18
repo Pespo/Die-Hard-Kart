@@ -43,7 +43,6 @@ package imac.diehardkart.decorable.vehicle {
 		}
 		
 		public function loop() : void {
-			//trace("ahhhhhhhhhhhhh " + rotation); 
 			if (!m_explode)
 				move();
 			else
