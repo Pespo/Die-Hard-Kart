@@ -1,8 +1,6 @@
 package imac.diehardkart.decorable.weapon {
 	import imac.diehardkart.utils.CustomEvent;
 	import flash.display.MovieClip;
-
-	import flash.geom.Point;
 	import imac.diehardkart.utils.Labels;
 	import flash.utils.getDefinitionByName;
 	import imac.diehardkart.decorable.bullet.IBullet;
@@ -42,7 +40,6 @@ package imac.diehardkart.decorable.weapon {
 
 		private function makeBullet() : void {
 			m_launchBullet = m_bullet.clone();
-			var bulletStartPosition : Point =  m_view.localToGlobal(new Point(0, 0));
 			m_launchBullet.x = x;
 			m_launchBullet.y = y;
 			m_launchBullet.rotate(rotation);
@@ -52,7 +49,6 @@ package imac.diehardkart.decorable.weapon {
 		public function shoot() : void {
 			++m_shootCounter;
 			if (m_shootRate <= m_shootCounter) {
-				trace("shoot");
 				makeBullet();
 				dispatchEvent(new CustomEvent(CustomEvent.SHOOT));
 				m_shootCounter = 0;

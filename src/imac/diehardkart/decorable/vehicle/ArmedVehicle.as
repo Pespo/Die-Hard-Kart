@@ -1,7 +1,5 @@
 package imac.diehardkart.decorable.vehicle {
-	import imac.diehardkart.decorable.Decorator;
 	import imac.diehardkart.decorable.weapon.IWeapon;
-	import flash.display.DisplayObject;
 
 	public class ArmedVehicle extends VehicleDecorator {
 		

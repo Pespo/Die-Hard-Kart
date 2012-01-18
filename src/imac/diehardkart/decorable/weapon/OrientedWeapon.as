@@ -16,7 +16,6 @@ package imac.diehardkart.decorable.weapon {
 		}
 			
 		public function aim(mouseX : Number, mouseY : Number) : void {
-
 			setOrientation(mouseX - x, mouseY - y);
 		}
 	}

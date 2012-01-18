@@ -7,7 +7,6 @@ package imac.diehardkart.decorable.vehicle {
 		private var m_controls : Array;
 		public static const MAX_SPEED_ON_ROAD : Number = PhysicalElement.MAX_SPEED / 5;
 		public static const MAX_SPEED_ON_SAND : Number = MAX_SPEED_ON_ROAD/ 3;
-		
 		public static var MAX_SPEED : Number = MAX_SPEED_ON_ROAD;
 		public static const MIN_SPEED : Number = PhysicalElement.MIN_SPEED;
 		private static const ROTATION : int = 3;

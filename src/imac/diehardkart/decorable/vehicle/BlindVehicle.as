@@ -1,5 +1,4 @@
 package imac.diehardkart.decorable.vehicle {
-	import imac.diehardkart.decorable.Decorator;
 	import com.gskinner.utils.Rndm;
 
 	public class BlindVehicle extends VehicleDecorator {
